@@ -1,223 +1,237 @@
-import React from 'react';
-import { Target, Users, Award, BookOpen, CheckCircle2, Quote, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { Target, Users, Award, BookOpen, Quote, Languages } from 'lucide-react';
 import Testimonials from '@/components/Testimonials';
 import Footer from '@/components/Footer';
+import ScrollingSection from '@/components/ScrollingSection';
+import teacher from '../assets/teacher.jpeg';
+import FacultySection from '@/components/FacultySection';
 
 const About = () => {
-  const stats = [
-    { label: "Students Trained", value: "10,000+", icon: <Users className="w-6 h-6" /> },
-    { label: "Success Rate", value: "95%", icon: <Target className="w-6 h-6" /> },
-    { label: "Expert Faculty", value: "50+", icon: <Award className="w-6 h-6" /> },
-    { label: "Years Excellence", value: "14+", icon: <BookOpen className="w-6 h-6" /> },
-  ];
+  const [language, setLanguage] = useState('en');
+
+  const t = {
+    en: {
+      heroTag: "About Harikamlansh Academy",
+      heroTitle: "Empowering Students For,",
+      heroSpan: "Navodaya & Sainik School",
+      heroDesc: "Harikamlansh Academy is more than a coaching institute. It's a platform where concepts meet clarity and dreams transform into reality through disciplined guidance.",
+      journeyTitle: "Our Journey Since 1985",
+      journeyP1: "Founded in 1985, Harikamlansh Academy (formerly known as Navodaya Entrance Exam Coaching) has built a 40-year legacy of excellence in competitive school admissions. Our mission goes beyond just clearing exams; we focus on concept-based learning and self-study mastery to make students bold and proficient in Math, Reasoning, and Language. Our results speak for our dedication",
+      journeyP2: "achieving an incredible milestone where 20 out of 80 district selections came from our institute alone, out of 5,000 total applicants. Today, we bring this unmatched expertise and proven success ratio to students across India through our specialized Online Mode, providing expert guidance for Navodaya, Sainik School, Shramodaya, and Rashtriya Military School entrance exams to help every aspirant secure their dream seat.",
+      awardTitle: "Guided by President Awardee Teacher",
+      awardName: "Shri Mahesh Shrivastava Acharya",
+      awardExp: "40+ Years of unmatched teaching expertise.",
+      stats: [
+        { label: "Students Trained", value: "10,000+" },
+        { label: "Success Rate", value: "100%" },
+        { label: "Expert Faculty", value: "3+" },
+        { label: "Years Excellence", value: "40+" },
+      ],
+      directorName: "Dr. Bhanu Prakash",
+      directorTitle: "Founder & Managing Director",
+      directorMsg: "Message From Director",
+      directorQuote: '"At Harikamlansh Academy, we don\'t just prepare you for exams; we prepare you for life. We focus on building a foundation so strong that no competition feels too difficult."',
+      // scrollingHeading: "Our Achievement Gallery",
+      // facultyHeading: "Meet Our Expert Faculty",
+      // facultySub: "Learn from Highly Experienced Educators Dedicated to Your Navodaya Success",
+      coursesTitle: "Our Offered Courses",
+      courseList: [
+        "Navodaya Entrance Exam",
+        "Sainik School Entrance Exam",
+        "Shramodaya School Entrance Exam",
+        "Rashtriya Military School Entrance"
+      ]
+    },
+    hi: {
+      heroTag: "हरिकमलंश एकेडमी के बारे में",
+      heroTitle: "छात्रों को सशक्त बनाना,",
+      heroSpan: "नवोदय और सैनिक स्कूल के लिए",
+      heroDesc: "हरिकमलंश एकेडमी सिर्फ एक कोचिंग संस्थान नहीं है। यह एक ऐसा मंच है जहां अवधारणाएं स्पष्टता से मिलती हैं और अनुशासित मार्गदर्शन के माध्यम से सपने हकीकत में बदलते हैं।",
+      journeyTitle: "1985 से हमारी यात्रा",
+      journeyP1: "1985 में स्थापित, हरिकमलंश एकेडमी (जिसे पहले नवोदय प्रवेश परीक्षा कोचिंग के रूप में जाना जाता था) ने प्रतिस्पर्धी स्कूल प्रवेश में उत्कृष्टता की 40 साल की विरासत बनाई है। हमारा मिशन केवल परीक्षा पास करना नहीं है; हम छात्रों को गणित, तर्क और भाषा में निडर और कुशल बनाने के लिए अवधारणा-आधारित शिक्षा और स्व-अध्ययन पर ध्यान केंद्रित करते हैं।",
+      journeyP2: "हमने एक अविश्वसनीय मील का पत्थर हासिल किया है जहां जिले के कुल 80 चयनों में से 20 हमारे संस्थान से थे। आज, हम अपने विशेष ऑनलाइन मोड के माध्यम से पूरे भारत में नवोदय, सैनिक स्कूल, श्रमोदय और राष्ट्रीय सैन्य स्कूल के लिए विशेषज्ञ मार्गदर्शन प्रदान कर रहे हैं ताकि हर आकांक्षी अपनी सपनों की सीट सुरक्षित कर सके।",
+      awardTitle: "राष्ट्रपति पुरस्कृत शिक्षक द्वारा मार्गदर्शित",
+      awardName: "श्री महेश श्रीवास्तव आचार्य",
+      awardExp: "40+ वर्षों का बेजोड़ शिक्षण अनुभव।",
+      stats: [
+        { label: "प्रशिक्षित छात्र", value: "10,000+" },
+        { label: "सफलता दर", value: "95%" },
+        { label: "विशेषज्ञ संकाय", value: "50+" },
+        { label: "उत्कृष्टता के वर्ष", value: "14+" },
+      ],
+      directorName: "डॉ. भानु प्रकाश",
+      directorTitle: "संस्थापक और प्रबंध निदेशक",
+      directorMsg: "निर्देशक का संदेश",
+      directorQuote: '"हरिकमलंश एकेडमी में, हम आपको केवल परीक्षाओं के लिए तैयार नहीं करते हैं; हम आपको जीवन के लिए तैयार करते हैं। हमारा ध्यान एक ऐसी नींव बनाने पर है जो इतनी मजबूत हो कि कोई भी प्रतियोगिता कठिन न लगे।"',
+      // scrollingHeading: "हमारी उपलब्धियों की झलक",
+      facultyHeading: "हमारे विशेषज्ञ शिक्षकों से मिलें",
+      facultySub: "आपकी नवोदय सफलता के लिए समर्पित अत्यधिक अनुभवी शिक्षकों से सीखें",
+      coursesTitle: "हमारे द्वारा प्रदान किए जाने वाले पाठ्यक्रम",
+      courseList: [
+        "नवोदय प्रवेश परीक्षा",
+        "सैनिक स्कूल प्रवेश परीक्षा",
+        "श्रमोदय स्कूल प्रवेश परीक्षा",
+        "राष्ट्रीय सैन्य स्कूल प्रवेश"
+      ]
+    }
+  };
+
+  const content = t[language];
+  const statsIcons = [<Users />, <Target />, <Award />, <BookOpen />];
 
   return (
-    <div className="min-h-screen bg-white mt-32 pb-0 overflow-x-hidden">
-      {/* 1. Modern Hero Section */}
-      <section className="container mx-auto px-4 mb-24 relative">
-        <div className="absolute top-0 -left-20 w-72 h-72 bg-primary/5 rounded-full blur-3xl -z-10 animate-pulse" />
-        <div className="text-center max-w-4xl mx-auto">
+    <>
+      <div className="fixed top-24 right-4 z-50">
+        <button 
+          onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
+          className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded-full font-bold shadow-2xl hover:bg-blue-800 transition-all border-2 border-white"
+        >
+          <Languages size={18} />
+          {language === 'en' ? 'हिन्दी' : 'English'}
+        </button>
+      </div>
+
+      <div className="min-h-screen bg-white mt-32 pb-0 overflow-x-hidden">
+        {/* 1. Hero Section */}
+        <section className="container mx-auto px-4 mb-24 relative text-center max-w-4xl">
           <span className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
-            Our Legacy of Excellence
+            {content.heroTag}
           </span>
-          <h1 className="text-3xl sm:text-4xl md:text-7xl font-black text-slate-900 mb-8 leading-[1.2] md:leading-[1.1]">
-            We Don't Just Teach, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">
-              We Build Careers
+          <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 mb-8 leading-[1.2]">
+            {content.heroTitle} <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600 md:text-5xl">
+              {content.heroSpan}
             </span>
           </h1>
-          <p className="text-xl text-slate-600 leading-relaxed mb-10">
-            Academic is more than a coaching institute. It's a platform where concepts meet clarity
-            and dreams transform into reality through disciplined guidance.
-          </p>
-        </div>
-      </section>
+          <p className="text-lg text-slate-600 leading-relaxed mb-10">{content.heroDesc}</p>
+        </section>
 
-      {/* 2. Stats Grid with Glassmorphism */}
-      <section className="container mx-auto px-4 mb-24 md:mb-32">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="group relative p-5 md:p-8 rounded-[1.5rem] md:rounded-[2.5rem] bg-gradient-to-b from-white to-slate-50/50 border border-slate-100 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_-10px_rgba(59,130,246,0.15)] hover:-translate-y-2 transition-all duration-500 overflow-hidden"
-            >
-              {/* Decorative background circle on hover */}
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-primary/5 rounded-full scale-0 group-hover:scale-150 transition-transform duration-700 -z-10" />
-
-              <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                {/* Icon with floating effect - Scaled down for mobile */}
-                <div className="w-12 h-12 md:w-16 md:h-16 bg-white text-primary rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.1)] group-hover:bg-primary group-hover:text-white group-hover:rotate-[10deg] transition-all duration-500">
-                  <div className="scale-90 md:scale-110">
-                    {stat.icon}
+        {/* 2. Journey Section */}
+        <section className="py-24 bg-green-50 overflow-hidden mb-14 text-center">
+          <div className="container mx-auto px-6 max-w-7xl">
+            <h2 className="text-4xl md:text-4xl font-black text-gray-900">{content.journeyTitle}</h2>
+            <div className="h-2 w-32 bg-blue-700 mx-auto mt-6 rounded-full mb-16"></div>
+            <div className="flex flex-col md:flex-row items-center gap-12">
+              <div className="w-full md:w-3/5 space-y-8 text-left">
+                <div className="space-y-6 text-gray-700 text-lg md:text-xl font-medium">
+                  <p>{content.journeyP1}</p>
+                  <p>{content.journeyP2}</p>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-blue-100 flex gap-5">
+                  <div className="bg-blue-600 p-3 rounded-2xl text-white text-3xl shrink-0">🎖️</div>
+                  <div>
+                    <h4 className="font-extrabold text-lg md:text-xl text-gray-900">{content.awardTitle}</h4>
+                    <p className="text-blue-600 font-bold uppercase text-xs tracking-wide">{content.awardName}</p>
+                    <p className="text-gray-500 text-xs italic">{content.awardExp}</p>
                   </div>
                 </div>
-
-                {/* Value with a subtle gradient or highlight */}
-                <div className="relative">
-                  <h3 className="text-2xl md:text-4xl font-black text-slate-900 tracking-tight mb-1">
-                    {stat.value}
-                  </h3>
-                  {/* Animated Underline: Center on mobile, Left on desktop */}
-                  <div className="w-8 h-1 bg-primary/20 rounded-full mx-auto md:mx-0 group-hover:w-full transition-all duration-500" />
+              </div>
+              <div className="w-full md:w-2/5 flex justify-center">
+                <div className="w-[280px] h-[280px] md:w-[350px] md:h-[350px] rounded-[3rem] overflow-hidden border-8 border-white shadow-2xl">
+                  <img src={teacher} alt="Teacher" className="w-full h-full object-cover" />
                 </div>
-
-                {/* Label - Slightly smaller on mobile */}
-                <p className="text-slate-500 font-bold text-[10px] md:text-xs mt-3 uppercase tracking-[0.1em] md:tracking-[0.15em]">
-                  {stat.label}
-                </p>
               </div>
             </div>
-          ))}
+          </div>
+        </section>
+
+        {/* 3. Stats */}
+        <section className="container mx-auto px-4 mb-24">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {content.stats.map((stat, i) => (
+              <div key={i} className="p-6 md:p-8 rounded-[1.5rem] bg-white border border-slate-100 shadow-sm text-center md:text-left">
+                <h3 className="text-2xl md:text-4xl font-black text-slate-900">{stat.value}</h3>
+                <p className="text-slate-500 font-bold text-[10px] uppercase tracking-widest">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* 4. Director Section */}
+        <section className="container mx-auto px-4 mb-0 h-auto">
+          <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden max-w-7xl  mx-auto text-white">
+            <div className="grid md:grid-cols-5 gap-8 items-center relative z-10">
+              <div className="md:col-span-2 mx-auto">
+                <img src="/Director.jpeg" alt="Director" className="w-full max-w-[300px] rounded-2xl shadow-xl aspect-[4/5] object-cover" />
+              </div>
+              <div className="md:col-span-3 text-center md:text-left">
+                <div className="border-l-4 border-primary pl-6 mb-8 hidden md:block">
+                  <h4 className="text-4xl font-extrabold">{content.directorName}</h4>
+                  <p className="text-primary font-bold tracking-widest uppercase text-xs mt-2">{content.directorTitle}</p>
+                </div>
+                <div className="md:hidden mb-6">
+                   <h4 className="text-2xl font-extrabold">{content.directorName}</h4>
+                   <p className="text-primary font-bold uppercase text-[10px]">{content.directorTitle}</p>
+                </div>
+                <h2 className="text-xl md:text-2xl font-black mb-2 text-primary">{content.directorMsg}</h2>
+                <p className="text-base md:text-xl text-slate-300 italic leading-relaxed">{content.directorQuote}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Headings For External Sections */}
+        <div className="text-center py-10">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">{content.scrollingHeading}</h2>
+            <ScrollingSection lang={language} />
         </div>
-      </section>
 
-      {/* 3. Director/Owner Section (The Face of Institute) */}
-      <section className="container mx-auto px-4 mb-24">
-        <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden max-w-7xl mx-auto">
-          {/* Decorative background slightly toned down */}
-          <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/5 skew-x-12 translate-x-10" />
+        <div className="text-center py-10">
+            <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-2">{content.facultyHeading}</h2>
+            <p className="text-slate-500 max-w-2xl mx-auto px-4">{content.facultySub}</p>
+            <FacultySection lang={language} />
+        </div>
 
-          <div className="grid md:grid-cols-5 gap-8 items-center relative z-10">
-            {/* Image Container - Sized down */}
-            <div className="md:col-span-2 max-w-[280px] mx-auto md:max-w-none">
-              <div className="relative group">
-                <div className="absolute inset-0 bg-primary/20 rounded-2xl translate-x-2 translate-y-2 group-hover:translate-x-1 group-hover:translate-y-1 transition-transform" />
-                <img
-                  src= "/Director.png"
-                  alt="Director"
-                  className="w-full aspect-[4/5] object-cover rounded-2xl relative z-10 hover:scale  transition-all duration-500 shadow-xl"
-                />
-              </div>
-            </div>
-
-            <div className="md:col-span-3 text-white text-center md:text-left">
-              {/* Director Name & Title - Mobile par center, Laptop par border-left ke saath */}
-              <div className="inline-block md:block border-l-0 md:border-l-4 border-primary pl-0 md:pl-6 mb-10">
-                <h4 className="text-2xl md:text-4xl font-extrabold text-white tracking-tight">
-                  Mr. Mohit Dwkr
-                </h4>
-                <p className="text-primary font-bold tracking-[0.2em] uppercase text-[10px] md:text-xs mt-2">
-                  Founder & Managing Director
-                </p>
-              </div>
-
-              {/* Heading */}
-              <h2 className="text-xl md:text-2xl font-black mb-2 leading-tight mt-2">
-                Message From <br className="hidden md:block" />
-                <span className="text-primary">Director</span>
+        {/* 5. Courses Section */}
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-6 max-w-5xl">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl md:text-4xl font-black text-slate-900">
+                {content.coursesTitle.split(' ')[0]} <span className='text-blue-700'>{content.coursesTitle.split(' ').slice(1).join(' ')}</span>
               </h2>
-
-              {/* Quote - Responsive font size and line height */}
-              <div className="relative">
-                <Quote className="absolute -top-4 -left-4 w-8 h-8 text-primary/20 md:hidden" />
-                <p className="text-base md:text-xl text-slate-300 mb-2 italic leading-relaxed max-w-2xl mx-auto md:mx-0">
-                  "At Toppers Academy, we don't just prepare you for exams; we prepare you for life.
-                  We focus on building a foundation so strong that no competition feels too difficult."
-                </p>
-              </div>
+              <hr className="mt-4 border-t-2 border-blue-700 opacity-100" />
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {content.courseList.map((course, i) => (
+                <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                  <div className="w-2 h-2 rounded-full bg-blue-600"></div>
+                  <span className="text-lg font-bold text-slate-700">{course}</span>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* 4. Modern Vision & Mission Cards */}
-      {/* 4. Modern Vision & Mission Timeline (Redesigned) */}
-     <section className="container mx-auto px-4 mb-32 relative pt-20">
-  {/* Decorative dotted background pattern */}
-  <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px] opacity-30 -z-10" />
-  
-  <div className="text-center max-w-2xl mx-auto mb-16 px-4">
-    <span className="inline-block px-4 py-1 mb-4 text-xs font-bold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
-      Our Path, Your Future
-    </span>
-    <h2 className="text-3xl md:text-5xl font-extrabold text-slate-950">What Drives Us?</h2>
-  </div>
-
-  {/* Timeline Line Logic: Fixed left on mobile, centered on desktop */}
-  <div className="relative space-y-16 md:space-y-24 before:absolute before:inset-y-0 before:left-4 md:before:left-1/2 before:w-1 before:bg-slate-100 before:-ml-px before:-z-10">
-    
-    {/* Mission Item */}
-    <div className="relative flex flex-col md:flex-row items-center gap-8 md:gap-12 group">
-      {/* Circle Icon - Stays aligned with line */}
-      <div className="absolute left-4 md:left-1/2 w-8 h-8 md:w-10 md:h-10 -ml-4 md:-ml-5 bg-primary text-white rounded-full flex items-center justify-center border-4 border-white shadow-xl scale-1 group-hover:scale-125 transition-transform duration-500 z-10">
-        <Target className="w-4 h-4 md:w-5 md:h-5" />
-      </div>
-
-      <div className="w-full md:w-1/2 pl-10 md:pl-0 md:pr-12">
-        <div className="p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-white to-slate-50 border border-slate-100 shadow-[0_15px_60px_-15px_rgba(0,0,0,0.08)] hover:-translate-y-2 transition-transform duration-500">
-          <div className="w-12 h-12 md:w-16 md:h-16 bg-primary/10 text-primary rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6">
-            <Target className="w-6 h-6 md:w-8 md:h-8" />
+        {/* 6. Toppers Section (Hindi Always) */}
+        <section className="py-20 bg-white text-center">
+          <div className="container mx-auto px-6 max-w-5xl">
+            <h2 className="text-2xl md:text-4xl font-black text-slate-900">चयनित विद्यार्थियों की सूची</h2>
+            <p className="text-slate-500 mt-2 font-medium mb-12">हमारे गौरवशाली छात्र जिन्होंने सफलता प्राप्त की</p>
+            <div className="bg-slate-50 rounded-[2rem] border p-6 md:p-8 mb-10">
+                <div className="space-y-4">
+                  {[
+                    { name: "पूजा राजपूत", detail: "d/o जसवंत सिंह राजपूत, मरसेनी", year: "2015-16" },
+                    { name: "कुणाल राजपूत", detail: "d/o जसवंत सिंह राजपूत, मरसेनी", year: "2015-16" },
+                    { name: "नैंसी यादव", detail: "d/o पवन यादव, दतिया", year: "2017-18" },
+                    { name: "आरती राजपूत", detail: "d/o जसवंत सिंह, दतिया", year: "2017-18" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex justify-between items-center p-4 bg-white rounded-xl border text-left">
+                      <div><p className="font-bold text-slate-900 text-lg">{item.name}</p><p className="text-sm text-slate-500">{item.detail}</p></div>
+                      <span className="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">{item.year}</span>
+                    </div>
+                  ))}
+                </div>
+            </div>
+            <button onClick={() => window.location.href = '/studentlist'} className="bg-blue-700 text-white font-bold py-4 px-10 rounded-full shadow-lg">
+              पूरी सूची देखें (See More) →
+            </button>
           </div>
-          <h3 className="text-2xl md:text-3xl font-black text-slate-900 mb-4 md:mb-6 flex items-center gap-3">
-             Our Mission
-             <span className="inline-block w-5 h-5 p-1 border-2 border-primary text-primary rounded-full"><ArrowRight className="w-full h-full" /></span>
-          </h3>
-          <p className="text-base md:text-lg leading-relaxed text-slate-600">
-            To bridge the gap between dreams and reality by providing world-class coaching that focuses on 
-            <span className="font-bold text-slate-800"> conceptual clarity </span> and <span className="font-bold text-slate-800"> competitive edge</span>. 
-          </p>
-        </div>
-      </div>
-      
-      {/* Image - Hidden on mobile to keep timeline clean, visible on md+ */}
-      <div className="hidden md:block md:w-1/2 md:pr-12">
-        <div className="relative group">
-          <div className="absolute inset-0 bg-primary/20 rounded-[2rem] translate-x-4 translate-y-4 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform duration-500" />
-          <div className="aspect-[4/3] rounded-[2rem] overflow-hidden relative z-10 shadow-2xl">
-            <img 
-              src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?auto=format&fit=crop&q=80" 
-              alt="Mission" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
+        </section>
 
-    {/* Vision Item */}
-    <div className="relative flex flex-col md:flex-row-reverse items-center gap-8 md:gap-12 group ">
-      {/* Circle Icon */}
-      <div className="absolute left-4 md:left-1/2 w-8 h-8 md:w-10 md:h-10 -ml-4 md:-ml-5 bg-slate-900 text-white rounded-full flex items-center justify-center border-4 border-white shadow-xl scale-1 group-hover:scale-125 transition-transform duration-500 z-10">
-        <Users className="w-4 h-4 md:w-5 md:h-5" />
+        <Testimonials />
+        <Footer />
       </div>
-
-      <div className="w-full md:w-1/2 pl-10 md:pl-12">
-        <div className="p-6 md:p-10 rounded-[1.5rem] md:rounded-[2rem] bg-gradient-to-br from-slate-950 to-slate-800 text-white shadow-[0_15px_60px_-15px_rgba(0,0,0,0.15)] hover:-translate-y-2 transition-transform duration-500">
-          <div className="w-12 h-12 md:w-16 md:h-16 bg-white/10 text-primary rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6">
-            <Users className="w-6 h-6 md:w-8 md:h-8" />
-          </div>
-          <h3 className="text-2xl md:text-3xl font-black mb-4 md:mb-6 flex items-center gap-3">
-             Our Vision
-             <span className="inline-block w-5 h-5 p-1 border-2 border-primary text-primary rounded-full"><ArrowRight className="w-full h-full" /></span>
-          </h3>
-          <p className="text-base md:text-lg leading-relaxed text-slate-200 italic">
-            "To be the most trusted education platform that empowers students globally to lead and succeed."
-          </p>
-        </div>
-      </div>
-      
-      {/* Image - Hidden on mobile */}
-      <div className="hidden md:block md:w-1/2 md:pl-12">
-        <div className="relative group">
-          <div className="absolute inset-0 bg-primary/20 rounded-[2rem] -translate-x-4 translate-y-4 group-hover:-translate-x-2 group-hover:translate-y-2 transition-transform duration-500" />
-          <div className="aspect-[4/3] rounded-[2rem] overflow-hidden relative z-10 shadow-2xl">
-            <img 
-              src="https://images.unsplash.com/photo-1517048676732-d65bc937f952?auto=format&fit=crop&q=80" 
-              alt="Vision" 
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<Testimonials/>
-<Footer/>
-      
-    </div>
+    </>
   );
 };
 

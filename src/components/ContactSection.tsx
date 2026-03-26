@@ -121,8 +121,8 @@ export default function ContactSection() {
                   className="w-full p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
                 >
                   <option value="">Select Class/Courses</option>
-                  <option value="school">School Classes (6th - 12th)</option>
-                  <option value="competitive">Competitive Exams</option>
+                  <option value="school">School Classes (5th - 12th)</option>
+                  <option value="competitive">Navodaya Exams</option>
                 </select>
 
                 {category === "school" && (
@@ -136,7 +136,7 @@ export default function ContactSection() {
                       className="p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none"
                     >
                       <option value="">Select Class</option>
-                      {[6,7,8,9,10,11,12].map(num => (
+                      {[5,6,7,8,9,10,11,12].map(num => (
                         <option key={num} value={num}>{num}th Standard</option>
                       ))}
                     </select>
@@ -151,7 +151,12 @@ export default function ContactSection() {
                       }}
                       className="p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none disabled:opacity-50"
                     >
-                      <option value="">Select Subject</option>
+                      <option value="">Select Subject/Exam</option>
+                       <option value="Navodaya entrance exam">Navodaya Entrance Exam</option>
+                       <option value="Sainik school entrance">Sainik School Entrance Exam</option>
+                       <option value="Shramodaya school entrance exam">Shramodaya School Entrance Exam</option>
+                       <option value="Rastriya military school entrance exam">Rastriya Military School Entrance Exam</option>
+                  
                       <option value="Mathematics">Mathematics</option>
                       <option value="Science">Science</option>
                       <option value="Physics">Physics</option>
@@ -173,10 +178,10 @@ export default function ContactSection() {
                     className="w-full p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none"
                   >
                     <option value="">Select Target Exam</option>
-                    <option value="IIT-JEE (Mains+Adv)">IIT-JEE (Mains+Adv)</option>
-                    <option value="NEET">NEET (Medical)</option>
-                    <option value="CUET">CUET</option>
-                    <option value="Olympiads">Olympiads</option>
+                    <option value="Navodaya entrance exam">Navodaya Entrance Exam</option>
+                       <option value="Sainik school entrance">Sainik School Entrance Exam</option>
+                       <option value="Shramodaya school entrance exam">Shramodaya School Entrance Exam</option>
+                       <option value="Rastriya military school entrance xam">Rastriya Military School Entrance Exam</option>
                   </motion.select>
                 )}
               </div>
@@ -217,7 +222,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 font-bold uppercase tracking-tight">Visit Us</p>
-                  <p className="text-sm font-semibold text-slate-800 leading-tight">Knowledge Park, New Delhi – 110001</p>
+                  <p className="text-sm font-semibold text-slate-800 leading-tight">Rajghat colony Datia (MP) – 475661</p>
                 </div>
               </div>
 
@@ -227,7 +232,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 font-bold uppercase tracking-tight">Call Support</p>
-                  <p className="text-sm font-semibold text-slate-800">+91 98765 43210</p>
+                  <p className="text-sm font-semibold text-slate-800">+91 7999627559</p>
                 </div>
               </div>
 
@@ -237,7 +242,7 @@ export default function ContactSection() {
                 </div>
                 <div>
                   <p className="text-xs text-slate-500 font-bold uppercase tracking-tight">Mail Inquiry</p>
-                  <p className="text-sm font-semibold text-slate-800">info@academic.edu.in</p>
+                  <p className="text-sm font-semibold text-slate-800">samarpratapshri98@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -245,7 +250,7 @@ export default function ContactSection() {
             <div className="rounded-3xl overflow-hidden border-4 border-white shadow-2xl h-full min-h-[250px] relative">
               <iframe
                 title="Location"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.562010214697!2d77.2065154150822!3d28.613939082424164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b347eb62d%3A0x37205b71db41105e!2sIndia%20Gate!5e0!3m2!1sen!2sin!4v1647424685000!5m2!1sen!2sin"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3596.339613280743!2d78.45260259999999!3d25.660034500000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x397713043d171677%3A0xf0b3679d7c749e62!2sNavodaya%20coaching!5e0!3m2!1sen!2sin!4v1774426357072!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0, filter: 'grayscale(0.2)' }}
@@ -258,3 +263,6 @@ export default function ContactSection() {
     </section>
   );
 }
+
+
+ 

@@ -151,17 +151,17 @@ export default function FacultyManager() {
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-5">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-2"><User className="h-3.5 w-3.5" /> FULL NAME</label>
-                <Input className="bg-slate-50 border-none h-11" placeholder="Dr. Rajesh Kumar" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
+                <Input className="bg-slate-50 border-none h-11" placeholder="Full Name" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} />
               </div>
 
               <div className="space-y-2">
-                <label className="text-xs font-bold text-slate-600 flex items-center gap-2"><BookOpen className="h-3.5 w-3.5" /> SUBJECT</label>
-                <Input className="bg-slate-50 border-none h-11" placeholder="Physics" value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} />
+                <label className="text-xs font-bold text-slate-600 flex items-center gap-2"><BookOpen className="h-3.5 w-3.5" /> SUBJECT/ABOUT</label>
+                <Input className="bg-slate-50 border-none h-11" placeholder="subject or about" value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} />
               </div>
 
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-2"><Briefcase className="h-3.5 w-3.5" /> EXPERIENCE (YEARS)</label>
-                <Input className="bg-slate-50 border-none h-11" type="number" placeholder="12" value={formData.experience} onChange={(e) => setFormData({ ...formData, experience: e.target.value })} />
+                <Input className="bg-slate-50 border-none h-11" type="number" placeholder="0" value={formData.experience} onChange={(e) => setFormData({ ...formData, experience: e.target.value })} />
               </div>
 
               <div className="space-y-2">

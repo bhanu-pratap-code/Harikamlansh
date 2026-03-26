@@ -12,6 +12,7 @@ import StudyMaterialSection from "./components/StudyMaterialSection";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import Payment from "./pages/Payment";
+import StudentList from "./pages/studentlist";
 
 const queryClient = new QueryClient();
 
@@ -51,6 +52,7 @@ function LayoutContent() {
         <Route path="/study-material" element={<StudyMaterialSection />} />
         <Route path="/about" element={<About />} />
         <Route path="/payment" element={<Payment />} />
+        <Route path="/studentlist" element={<StudentList />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

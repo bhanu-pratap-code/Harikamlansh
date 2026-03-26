@@ -61,8 +61,8 @@ export default function FacultySection() {
           <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mt-4">
             Meet <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-600 to-indigo-600">Our Faculty</span>
           </h2>
-          <p className="mt-6 text-gray-500 max-w-2xl mx-auto text-lg leading-relaxed font-medium">
-            Empowering students through the wisdom of India's most experienced educators.
+          <p className="mt-6 text-gray-500 max-w-2xl mx-auto md:text-lg text-sm leading-relaxed font-medium">
+           "Learn from Highly Experienced Educators Dedicated to Your Navodaya Success"
           </p>
         </motion.div>
 

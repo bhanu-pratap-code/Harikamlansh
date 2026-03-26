@@ -59,8 +59,8 @@ export default function GallerySection() {
       <h2 className="text-3xl md:text-6xl font-black text-gray-900 tracking-tight mt-4">
         Life at our  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-600 to-indigo-600">Institute</span>
       </h2>
-      <p className="mt-6 text-gray-500 max-w-xl mx-auto text-base md:text-lg leading-relaxed font-medium">
-       Explore our state-of-the-art classrooms, collaborative study zones, and the success stories we build every single day.
+      <p className="mt-6 text-gray-500 max-w-xl mx-auto text-sm md:text-lg leading-relaxed font-medium">
+     "Explore Our Classrooms, Learning Environment, and Moments of Navodaya Success"
       </p>
     </motion.div>
 

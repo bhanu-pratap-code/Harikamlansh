@@ -22,7 +22,7 @@ const ScrollingSection = () => {
     <section className="py-52 bg-white overflow-hidden pb-0">
       <div className="container mx-auto px-4 mb-4 text-center shadow-sm">
         <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
-          2026 <span className='text-blue-700'>Toppers</span> 
+        2026   <span className='text-blue-700'>Toppers</span> 
         </h2>
         <div className="h-1.5 w-20 bg-blue-700 mx-auto mt-4 rounded-full"></div>
       </div>

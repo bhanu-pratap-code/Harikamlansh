@@ -10,22 +10,22 @@ interface Testimonial {
 
 const testimonials: Testimonial[] = [
   {
-    name: "Aryan Khan",
-    rank: "IIT JEE - Rank 452",
-    review: "The personalized mentorship at Academic changed my approach towards physics. The faculty is extremely supportive and the environment is very competitive yet.",
-    image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&h=200"
+    name: "Vaibhav Sj",
+    rank: "7 months ago",
+    review: "Best coaching in Datia… my child has selected in sainik school through this institution… thanku sir.",
+    image: "V"
   },
   {
-    name: "Sanya Gupta",
-    rank: "NEET - 680/720",
-    review: "Structured study material and weekly tests helped me identify my weak spots early on. I couldn't have cracked NEET without their consistent guidance.",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200"
+    name: "Nakul Yadav",
+    rank: "1 year ago",
+    review: "Harikamlash Academy provided the best faculty those helps to clear the jnv exam they have proper notes and guidance my 2 daughter and 1son also clear the jnv exam.",
+    image: ""
   },
   {
-    name: "Rohan Verma",
-    rank: "Board Exam - 98%",
-    review: "The doubt clearing sessions are the best. Teachers are always ready to help even after classes. The digital library was a great resource during my exams.",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200"
+    name: "Mithlesh Bhagat",
+    rank: "2 years ago",
+    review: "Best Coaching Institute by Bhanu Srivastava Sir for Navodaya Vidyalaya and Sainik School Entrance Exam.  With his guidance and hard work many students have achieved there goals.",
+    image: ""
   }
 ];
 
@@ -39,8 +39,8 @@ const Testimonials: React.FC = () => {
           <span className="inline-block px-4 py-1.5 mb-4 text-[11px] font-black tracking-[0.2em] text-primary uppercase bg-primary/10 rounded-full">
             Testimonials
           </span>
-          <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
-            What Our <span className="text-primary italic font-serif">Champions</span> Say
+          <h2 className="text-3xl md:text-5xl font-black text-slate-900 ">
+            What <span className="text-primary italic font-serif">Parents</span> Say
           </h2>
          
         </div>
@@ -50,7 +50,7 @@ const Testimonials: React.FC = () => {
  <div className="flex items-center justify-center mb-9 gap-2 bg-white shadow-sm border border-slate-100 w-fit px-4 py-2 rounded-full mx-auto">
             <img
               src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" className="w-4 h-4" alt="Google" />
-            <span className="text-xs font-bold text-slate-600 tracking-tight">4.9/5 Rating on Google Maps</span>
+            <span className="text-xs font-bold text-slate-600 tracking-tight">5/5 Ratings on Google</span>
           </div>
 
        <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-8 overflow-x-auto pb-5 no-scrollbar snap-x snap-mandatory pt px-4">
@@ -60,13 +60,22 @@ const Testimonials: React.FC = () => {
       className="min-w-[80vw] md:min-w-0 max-w-[380px] mx-auto snap-center group relative pt-10"
     >
       {/* Profile Image - Chhota aur Compact */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-30">
-        <div className="w-20 h-20 rounded-full border-[5px] border-white bg-slate-100 shadow-lg group-hover:shadow-primary/20 group-hover:scale-105 transition-all duration-500 overflow-hidden">
-           <img 
-             src={t.image} 
-             alt={t.name} 
-             className="w-full h-full object-cover" 
-           />
+<div className="absolute top-0 left-1/2 -translate-x-1/2 z-30">
+  <div className="w-20 h-20 rounded-full border-[5px] border-white bg-slate-100 shadow-lg group-hover:shadow-primary/20 group-hover:scale-105 transition-all duration-500 overflow-hidden">
+    
+    {t.image && t.image.startsWith("http") ? (
+      <img 
+        src={t.image} 
+        alt={t.name} 
+        className="w-full h-full object-cover" 
+      />
+    ) : (
+      <div className="w-full h-full flex items-center justify-center text-2xl font-semibold text-slate-700">
+        {t.name?.charAt(0).toUpperCase()}
+      </div>
+    )}
+
+  
         </div>
         {/* Floating Quote */}
         <div className="absolute -bottom-1 -right-0 w-7 h-7 bg-primary text-white rounded-full flex items-center justify-center shadow-md scale-90 group-hover:scale-110 transition-transform">
@@ -97,7 +106,7 @@ const Testimonials: React.FC = () => {
           <h4 className="font-bold text-slate-900 text-lg tracking-tight mb-0.5 uppercase">
             {t.name}
           </h4>
-          <p className="text-[10px] text-primary font-extrabold uppercase tracking-[0.15em]">
+          <p className="text-[8px] text-primary font-extrabold uppercase tracking-[0.15em]">
             {t.rank}
           </p>
         </div>
@@ -124,7 +133,7 @@ const Testimonials: React.FC = () => {
           <button
             className="flex items-center gap-4 bg-slate-950 text-white px-4 py-2 mt-2
              rounded-full font-bold hover:bg-primary transition-all group shadow-2xl shadow-slate-200 active:scale-95"
-            onClick={() => window.open('https://google.com', '_blank')}
+            onClick={() => window.open('https://www.google.com/maps/place/Navodaya+coaching/@25.6600345,78.4500277,17z/data=!3m1!4b1!4m6!3m5!1s0x397713043d171677:0xf0b3679d7c749e62!8m2!3d25.6600345!4d78.4526026!16s%2Fg%2F11s460h43_?entry=ttu&g_ep=EgoyMDI2MDMyMi4wIKXMDSoASAFQAw%3D%3D', '_blank')}
           >
             <div className="bg-white p-1 rounded-full">
               <img src="https://www.gstatic.com/images/branding/product/2x/googleg_48dp.png" className="w-5 h-5" alt="G" />

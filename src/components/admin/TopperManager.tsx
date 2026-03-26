@@ -180,7 +180,7 @@ export default function TopperManager() {
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-1"><GraduationCap className="h-3 w-3"/> STUDENT NAME</label>
-                <Input placeholder="John Doe" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="h-11 bg-slate-50/50" />
+                <Input placeholder="Full Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="h-11 bg-slate-50/50" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-1"><BookOpen className="h-3 w-3"/> CLASS</label>
@@ -192,7 +192,7 @@ export default function TopperManager() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-1"><Calendar className="h-3 w-3"/> BATCH YEAR</label>
-                <Input placeholder="2025" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} className="h-11 bg-slate-50/50" />
+                <Input placeholder="2026" value={form.year} onChange={(e) => setForm({ ...form, year: e.target.value })} className="h-11 bg-slate-50/50" />
               </div>
               <div className="md:col-span-2 space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-1"><Link className="h-3 w-3"/> IMAGE URL (PASTE FROM WEB)</label>

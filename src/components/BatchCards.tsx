@@ -44,7 +44,7 @@ const nextYear = currentYear + 1;
 const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
 
   return (
-    <section id="batches" className="relative py-24 mt-20 bg-[#f8faff] overflow-hidden">
+    <section id="batches" className="relative py- mt- bg-[#f8faff] overflow-hidden">
       {/* Decorative Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none">
         <div className="absolute top-0 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
@@ -74,8 +74,8 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
             Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Premium Batches</span>
           </h2>
-          <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-lg leading-relaxed">
-            Elevate your learning experience with our meticulously designed programs tailored for academic excellence.
+          <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed">
+           "High-Performance Courses for Navodaya Entrance Preparation with Expert Guidance and Proven Results"
           </p>
         </motion.div>
 
@@ -102,21 +102,21 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
         <div className="flex justify-between items-center mb-8 relative z-10">
           <div className="relative">
             <div className="absolute inset-0 bg-primary blur-lg opacity-20 group-hover:opacity-40 transition-opacity" />
-            <div className="relative px-6 py-2 rounded-2xl bg-gray-900 text-white text-[10px] font-black tracking-[0.2em] uppercase shadow-2xl">
-              CLASS {b.class_name}
+            <div className="relative px-6 py-2 rounded-2xl bg-gray-900 text-white text-[12px] font-black tracking-[0.2em] md:uppercase shadow-">
+               {b.class_name}
             </div>
           </div>
-          <motion.div 
+          {/* <motion.div 
             whileHover={{ rotate: 15 }}
             className="w-12 h-12 rounded-2xl bg-white shadow-inner border border-gray-100 flex items-center justify-center text-gray-400 group-hover:text-primary group-hover:bg-primary/5 transition-all duration-300"
           >
             <BookOpen className="w-6 h-6" />
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Title */}
-        <h3 className="relative z-10 text-2xl font-black text-gray-800 mb-6 tracking-tight group-hover:text-primary transition-colors duration-300">
-          {b.subjects}
+        <h3 className="relative z-10 text-xl font-black text-gray-800 mb-6 tracking-tight group-hover:text-primary transition-colors duration-300">
+          <span className="text-sm font-medium">eligibility - </span>{b.subjects}
         </h3>
 
         {/* Info Blocks */}
@@ -126,20 +126,20 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
               <Clock className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Timing</span>
+              <span className="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Timing</span>
               <span className="text-sm font-bold text-gray-700">{b.start_time} - {b.end_time}</span>
             </div>
           </div>
 
           <div className="flex items-center justify-between p-4 px-2">
             <div className="flex flex-col">
-              <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">Course Fee</span>
+              <span className="text-[10px] uppercase font-bold text-gray-500 tracking-wider">Course Fee</span>
               <div className="flex items-center gap-1.5 mt-1">
                 <div className="bg-primary/10 p-1 rounded-md">
                   <IndianRupee className="w-4 h-4 text-primary font-bold" />
                 </div>
                 <span className="text-3xl font-black text-gray-900 tracking-tighter">{b.price}</span>
-                <span className="text-gray-400 text-xs font-bold ml-1">/month</span>
+                <span className="text-gray-500 text-xs font-bold ml-1">/month</span>
               </div>
             </div>
             
