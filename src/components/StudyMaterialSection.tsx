@@ -169,7 +169,7 @@ export default function StudyMaterialSection() {
                 <Button 
                   onClick={() => setShowMorePdfs(!showMorePdfs)}
                   variant="outline"
-                  className="rounded-full px-8 font-bold border-2 border-slate-200 hover:border-primary hover:text-primary transition-all flex items-center mx-auto gap-2"
+                  className="rounded-full px-8 font-bold border-2 border-green-300 hover:border-green-500 hover:text-green-600 transition-all flex items-center mx-auto gap-2"
                 >
                   {showMorePdfs ? (
                     <><ChevronUp className="h-4 w-4" /> Show Less</>
@@ -232,7 +232,7 @@ export default function StudyMaterialSection() {
             <div className="mt-16 text-center">
               <button 
                 onClick={() => setShowAllVideos(!showAllVideos)}
-                className="px-10 py-4 bg-blue-700 text-white font-bold text-sm  rounded-full hover:bg-blue-800 shadow-xl shadow-blue-200 transition-all active:scale-95 flex items-center mx-auto gap-2 mb-16"
+                className="px-10 py-4 bg-green-600 text-white font-bold text-sm  rounded-full hover:bg-green-800 shadow-xl shadow-blue-200 transition-all active:scale-95 flex items-center mx-auto gap-2 mb-16"
               >
                 {showAllVideos ? (
                   <><ChevronUp className="h-5 w-5" /> Show Less Lectures</>

@@ -58,11 +58,11 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary/10 text-primary text-sm font-bold mb-6 border border-primary/20 shadow-sm transition-all hover:bg-primary/15">
+          <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-yellow-400 text-white text-sm font-bold mb-6 border border-green-500 shadow-sm transition-all hover:bg-yellow-500">
   {/* Live Blinking Dot */}
   <span className="relative flex h-2.5 w-2.5">
-    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
+    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-white"></span>
   </span>
   
  <span className="tracking-wide uppercase">
@@ -72,7 +72,7 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
   <Sparkles className="w-4 h-4 animate-pulse" />
 </div>
           <h2 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
-            Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600">Premium Batches</span>
+            Our <span className=" text-green-600">Premium Batches</span>
           </h2>
           <p className="mt-4 text-gray-600 max-w-2xl mx-auto text-sm md:text-lg leading-relaxed">
            "High-Performance Courses for Navodaya Entrance Preparation with Expert Guidance and Proven Results"
@@ -102,7 +102,7 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
         <div className="flex justify-between items-center mb-8 relative z-10">
           <div className="relative">
             <div className="absolute inset-0 bg-primary blur-lg opacity-20 group-hover:opacity-40 transition-opacity" />
-            <div className="relative px-6 py-2 rounded-2xl bg-gray-900 text-white text-[12px] font-black tracking-[0.2em] md:uppercase shadow-">
+            <div className="relative px-6 py-2 rounded-2xl bg-green-700 text-white text-[12px] font-black tracking-[0.2em] md:uppercase shadow-">
                {b.class_name}
             </div>
           </div>
@@ -115,14 +115,14 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
         </div>
 
         {/* Title */}
-        <h3 className="relative z-10 text-xl font-black text-gray-800 mb-6 tracking-tight group-hover:text-primary transition-colors duration-300">
+        <h3 className="relative z-10 text-xl font-black text-gray-800 mb-6 tracking-tight group-hover:text-yellow-400 transition-colors duration-300">
           <span className="text-sm font-medium">eligibility - </span>{b.subjects}
         </h3>
 
         {/* Info Blocks */}
         <div className="relative z-10 space-y-4 mb-10">
           <div className="flex items-center gap-4 p-4 rounded-[1.5rem] bg-white/50 border border-white shadow-sm group-hover:shadow-md transition-all duration-300">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-blue-200">
+            <div className="w-10 h-10 rounded-xl bg-yellow-400 flex items-center justify-center text-white shadow-lg shadow-blue-200">
               <Clock className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
@@ -145,14 +145,14 @@ const academicSession = `${currentYear}-${nextYear.toString().slice(-2)}`;
             
             {/* Visual Element: Sparkle or Small tag */}
             <div className="h-10 w-10 rounded-full border-2 border-dashed border-gray-200 flex items-center justify-center group-hover:border-primary/50 group-hover:rotate-45 transition-all duration-700">
-               <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+               <div className="h-2 w-2 rounded-full bg-yellow-400 animate-pulse" />
             </div>
           </div>
         </div>
 
         {/* CTA Button */}
         <Button 
-          className="relative z-10 w-full h-16 rounded-[1.5rem] bg-gray-900 hover:bg-primary text-white font-black text-lg shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:shadow-primary/40 transition-all duration-500 group-hover:scale-[1.03] active:scale-95" 
+          className="relative z-10 w-full h-16 rounded-[1.5rem] bg-green-700 hover:bg-yellow-500 text-white font-black text-lg shadow-[0_20px_40px_-10px_rgba(0,0,0,0.2)] hover:shadow-primary/40 transition-all duration-500 group-hover:scale-[1.03] active:scale-95" 
           asChild
         >
           <a href="#contact" className="flex items-center justify-center gap-3">

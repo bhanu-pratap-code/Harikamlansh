@@ -81,10 +81,10 @@ const About = () => {
 
   return (
     <>
-      <div className="fixed top-24 right-4 z-50">
+      <div className="fixed top-20 right-4 -z-50">
         <button 
           onClick={() => setLanguage(language === 'en' ? 'hi' : 'en')}
-          className="flex items-center gap-2 bg-blue-700 text-white px-4 py-2 rounded-full font-bold shadow-2xl hover:bg-blue-800 transition-all border-2 border-white"
+          className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded-full font-medium shadow-2xl hover:bg-green-800 transition-all border-2 border-white"
         >
           <Languages size={18} />
           {language === 'en' ? 'हिन्दी' : 'English'}
@@ -94,12 +94,12 @@ const About = () => {
       <div className="min-h-screen bg-white mt-32 pb-0 overflow-x-hidden">
         {/* 1. Hero Section */}
         <section className="container mx-auto px-4 mb-24 relative text-center max-w-4xl">
-          <span className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-primary uppercase bg-primary/10 rounded-full">
+          <span className="inline-block px-4 py-1.5 mb-6 text-sm font-bold tracking-wider text-white uppercase bg-green-600 rounded-full">
             {content.heroTag}
           </span>
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-black text-slate-900 mb-8 leading-[1.2]">
             {content.heroTitle} <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-blue-600 md:text-5xl">
+            <span className="text-yellow-400 md:text-5xl">
               {content.heroSpan}
             </span>
           </h1>
@@ -110,7 +110,7 @@ const About = () => {
         <section className="py-24 bg-green-50 overflow-hidden mb-14 text-center">
           <div className="container mx-auto px-6 max-w-7xl">
             <h2 className="text-4xl md:text-4xl font-black text-gray-900">{content.journeyTitle}</h2>
-            <div className="h-2 w-32 bg-blue-700 mx-auto mt-6 rounded-full mb-16"></div>
+            <div className="h-2 w-32 bg-green-600 mx-auto mt-6 rounded-full mb-16"></div>
             <div className="flex flex-col md:flex-row items-center gap-12">
               <div className="w-full md:w-3/5 space-y-8 text-left">
                 <div className="space-y-6 text-gray-700 text-lg md:text-xl font-medium">
@@ -149,21 +149,21 @@ const About = () => {
 
         {/* 4. Director Section */}
         <section className="container mx-auto px-4 mb-0 h-auto">
-          <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden max-w-7xl  mx-auto text-white">
+          <div className="bg-green-950 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden max-w-7xl  mx-auto text-white">
             <div className="grid md:grid-cols-5 gap-8 items-center relative z-10">
               <div className="md:col-span-2 mx-auto">
-                <img src="/Director.jpeg" alt="Director" className="w-full max-w-[300px] rounded-2xl shadow-xl aspect-[4/5] object-cover" />
+                <img src="/Director.jpeg" alt="Director" className="w-full max-w-[300px] rounded-2xl shadow-xl aspect-[4/5] object-cover border-white" />
               </div>
               <div className="md:col-span-3 text-center md:text-left">
-                <div className="border-l-4 border-primary pl-6 mb-8 hidden md:block">
+                <div className="border-l-4 border-white pl-6 mb-8 hidden md:block">
                   <h4 className="text-4xl font-extrabold">{content.directorName}</h4>
-                  <p className="text-primary font-bold tracking-widest uppercase text-xs mt-2">{content.directorTitle}</p>
+                  <p className="text-white font-bold tracking-widest uppercase text-xs mt-2">{content.directorTitle}</p>
                 </div>
                 <div className="md:hidden mb-6">
                    <h4 className="text-2xl font-extrabold">{content.directorName}</h4>
-                   <p className="text-primary font-bold uppercase text-[10px]">{content.directorTitle}</p>
+                   <p className="text-white font-bold uppercase text-[10px]">{content.directorTitle}</p>
                 </div>
-                <h2 className="text-xl md:text-2xl font-black mb-2 text-primary">{content.directorMsg}</h2>
+                <h2 className="text-xl md:text-2xl font-black mb-2 text-white">{content.directorMsg}</h2>
                 <p className="text-base md:text-xl text-slate-300 italic leading-relaxed">{content.directorQuote}</p>
               </div>
             </div>
@@ -187,14 +187,14 @@ const About = () => {
           <div className="container mx-auto px-6 max-w-5xl">
             <div className="text-center mb-12">
               <h2 className="text-2xl md:text-4xl font-black text-slate-900">
-                {content.coursesTitle.split(' ')[0]} <span className='text-blue-700'>{content.coursesTitle.split(' ').slice(1).join(' ')}</span>
+                {content.coursesTitle.split(' ')[0]} <span className='text-green-600'>{content.coursesTitle.split(' ').slice(1).join(' ')}</span>
               </h2>
-              <hr className="mt-4 border-t-2 border-blue-700 opacity-100" />
+              <hr className="mt-4 border-t-2 border-yellow-400 opacity-100" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {content.courseList.map((course, i) => (
                 <div key={i} className="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-100">
-                  <div className="w-2 h-2 rounded-full bg-blue-600"></div>
+                  <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
                   <span className="text-lg font-bold text-slate-700">{course}</span>
                 </div>
               ))}
@@ -217,12 +217,12 @@ const About = () => {
                   ].map((item, i) => (
                     <div key={i} className="flex justify-between items-center p-4 bg-white rounded-xl border text-left">
                       <div><p className="font-bold text-slate-900 text-lg">{item.name}</p><p className="text-sm text-slate-500">{item.detail}</p></div>
-                      <span className="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">{item.year}</span>
+                      <span className="bg-yellow-100 text-yellow-500 text-xs font-bold px-3 py-1 rounded-full">{item.year}</span>
                     </div>
                   ))}
                 </div>
             </div>
-            <button onClick={() => window.location.href = '/studentlist'} className="bg-blue-700 text-white font-bold py-4 px-10 rounded-full shadow-lg">
+            <button onClick={() => window.location.href = '/studentlist'} className="bg-green-600 hover:bg-green-700 text-white font-bold py-4 px-10 rounded-full shadow-lg">
               पूरी सूची देखें (See More) →
             </button>
           </div>

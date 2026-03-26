@@ -54,12 +54,12 @@ export default function FacultySection() {
           <motion.span
             initial={{ opacity: 0, scale: 0.5 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="px-4 py-1.5 rounded-full bg-primary text-white text-[10px] font-black tracking-widest uppercase mb-4 inline-block shadow-lg shadow-primary/20"
+            className="px-4 py-1.5 rounded-full bg-yellow-400 text-white text-[10px] font-black tracking-widest uppercase mb-4 inline-block shadow-lg shadow-primary/20"
           >
             World-Class Mentors
           </motion.span>
           <h2 className="text-4xl md:text-6xl font-black text-gray-900 tracking-tight mt-4">
-            Meet <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-600 to-indigo-600">Our Faculty</span>
+            Meet <span className="text-green-600">Our Faculty</span>
           </h2>
           <p className="mt-6 text-gray-500 max-w-2xl mx-auto md:text-lg text-sm leading-relaxed font-medium">
            "Learn from Highly Experienced Educators Dedicated to Your Navodaya Success"
@@ -78,7 +78,7 @@ export default function FacultySection() {
               className="group relative"
             >
               {/* Main Card */}
-              <div className="relative bg-white rounded-[3rem] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 group-hover:border-primary/30 transition-all duration-500 z-10 overflow-hidden">
+              <div className="relative bg-white rounded-[3rem] p-4 shadow-[0_20px_50px_rgba(0,0,0,0.05)] border border-gray-100 group-hover:border-green-400 transition-all duration-500 z-10 overflow-hidden">
 
                 {/* Image Wrapper */}
                 <div className="relative aspect-[1/1.1] rounded-[2.5rem] overflow-hidden bg-gray-100">
@@ -102,9 +102,9 @@ export default function FacultySection() {
                   </div>
 
                   {/* Social Media Overlay (Modern Touch) */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+                  <div className="absolute inset-0 bg-gradient-to-t from-green-400 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
                     <div className="flex gap-3 translate-y-10 group-hover:translate-y-0 transition-transform duration-500">
-                      <div className="p-3 rounded-full bg-white text-primary hover:bg-primary hover:text-white transition-colors cursor-pointer shadow-lg">
+                      <div className="p-3 rounded-full bg-white text-green-600 hover:bg-green-600 hover:text-white transition-colors cursor-pointer shadow-lg">
                         <BookOpen className="w-5 h-5" />
                       </div>
                     </div>
@@ -113,15 +113,15 @@ export default function FacultySection() {
 
                 {/* Info Area */}
                 <div className="pt-6 pb-4 px-4 text-center">
-                  <h3 className="text-xl font-black text-gray-800 tracking-tight mb-1 group-hover:text-primary transition-colors">
+                  <h3 className="text-xl font-black text-gray-800 tracking-tight mb-1 group-hover:text-yellow-400 transition-colors">
                     {f.name}
                   </h3>
-                  <p className="text-primary text-xs font-black uppercase tracking-[0.15em] opacity-80">
+                  <p className="text-yellow-500 text-xs font-black uppercase tracking-[0.15em] opacity-80">
                     {f.subject}
                   </p>
 
                   {/* Decorative line */}
-                  <div className="w-10 h-1 bg-gray-100 mx-auto mt-4 rounded-full group-hover:w-20 group-hover:bg-primary transition-all duration-500" />
+                  <div className="w-10 h-1 bg-gray-100 mx-auto mt-4 rounded-full group-hover:w-20 group-hover:bg-green-600 transition-all duration-500" />
                 </div>
               </div>
 

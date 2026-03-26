@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Menu, X, ChevronDown } from "lucide-react"; // ChevronDown add kiya hai
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"; // ChevronDown add kiya hai
 import { Button } from "@/components/ui/button";
 import { Link, useLocation } from "react-router-dom";
 
@@ -83,7 +83,7 @@ export default function Navbar() {
             window.scrollTo({ top: 0, behavior: "smooth" });
             setActive("#home");
           }}
-          className={`flex items-center gap-2 font-bold transition-colors ${isSolid ? "text-primary" : "text-white"
+          className={`flex items-center gap-2 font-bold transition-colors ${isSolid ? "text-green-600" : "text-white"
             }`}
         >
           <img
@@ -112,10 +112,10 @@ export default function Navbar() {
                 }}
                 className={`px-4 py-2 text-sm font-bold transition-all rounded-full ${isActive
                     ? isSolid
-                      ? "text-primary bg-primary/10"
+                      ? "text-green-600 bg-primary/10"
                       : "text-white bg-white/20 backdrop-blur-md"
                     : isSolid
-                      ? "text-muted-foreground hover:text-primary"
+                      ? "text-muted-foreground hover:text-green-700"
                       : "text-white/70 hover:text-white"
                   }`}
               >
@@ -130,7 +130,7 @@ export default function Navbar() {
             onMouseEnter={() => setDropdownOpen(true)}
             onMouseLeave={() => setDropdownOpen(false)}
           >
-            <button className={`px-4 py-2 text-sm font-bold transition-all flex items-center gap-1 ${isSolid ? "text-muted-foreground hover:text-primary" : "text-white/75 hover:text-white"
+            <button className={`px-4 py-2 text-sm font-bold transition-all flex items-center gap-1 ${isSolid ? "text-muted-foreground hover:text-green-700" : "text-white/75 hover:text-white"
               }`}>
               Courses <ChevronDown className="h-4 w-4" />
             </button>
@@ -153,11 +153,11 @@ export default function Navbar() {
               </div>
             )}
           </div>
-          <Link to="/study-material" className={`px-4 py-2 text-sm font-bold transition-all ${isSolid ? "text-muted-foreground hover:text-primary" : "text-white/70 hover:text-white"
+          <Link to="/study-material" className={`px-4 py-2 text-sm font-bold transition-all ${isSolid ? "text-muted-foreground hover:text-green-700" : "text-white/70 hover:text-white"
             }`}>
             Study Material
           </Link>
-          <Link to="/about" className={`px-4 py-2 text-sm font-bold transition-all ${isSolid ? "text-muted-foreground hover:text-primary" : "text-white/70 hover:text-white"
+          <Link to="/about" className={`px-4 py-2 text-sm font-bold transition-all ${isSolid ? "text-muted-foreground hover:text-green-700" : "text-white/70 hover:text-white"
             }`}>
             About Us
           </Link>
@@ -165,14 +165,14 @@ export default function Navbar() {
          <button 
   className={`ml-1 rounded-full px-4 py-2 font-bold shadow-lg transition-all duration-300 hover:scale-105 border-2 
     ${!isSolid 
-      ? "border-white text-white hover:bg-white hover:text-blue-500 bg-transparent" 
-      : "border-blue-500 text-blue-600 hover:bg-blue-600 hover:text-white bg-transparent"
+      ? "border-white text-white hover:bg-white hover:text-green-500 bg-transparent" 
+      : "border-green-500 text-green-600 hover:bg-green-600 hover:text-white bg-transparent"
     }`}
 >
   <a className= "font-semibold text-sm" href="/payment">Pay Fees</a>
 </button>
 
-          <Button size="lg" className={`ml-4 rounded-full px-4 shadow-lg transition-transform hover:scale-105 ${!isSolid && "bg-white text-primary hover:bg-gray-100 border-none"
+          <Button size="lg" className={`ml-4 rounded-full px-4 shadow-lg transition-transform hover:scale-105 bg-green-500 hover:bg-green-600 ${!isSolid && "bg-white text-green-500 hover:bg-gray-100 border-none"
             }`} asChild>
             <a href="/#contact">Join Now</a>
           </Button>
@@ -205,7 +205,7 @@ export default function Navbar() {
                   setOpen(false);
                   if (l.href === "/") window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
-                className={`block py-3 text-base font-semibold border-b border-border/50 last:border-none ${isActive ? "text-primary" : "text-foreground"
+                className={`block py-3 text-base font-semibold border-b border-border/50 last:border-none ${isActive ? "text-green-600" : "text-foreground"
                   }`}
               >
                 {l.label}
@@ -214,36 +214,58 @@ export default function Navbar() {
           })}
 
 
-          {/* Mobile Courses Section (Accordion Style) */}
-          <div className="py-3 border-b border-border/50">
-            <button
-              onClick={() => setIsMobileCoursesOpen(!isMobileCoursesOpen)}
-              className="flex items-center justify-between w-full text-base font-semibold text-foreground"
-            >
-              Courses
-              <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isMobileCoursesOpen ? "rotate-180" : ""}`} />
-            </button>
+          {/* Mobile Courses Section (Overlay Style) */}
+<div className="py-3 border-b border-border/50">
+  <button
+    onClick={() => setIsMobileCoursesOpen(true)} // Isse section open hoga
+    className="flex items-center justify-between w-full text-base font-semibold text-foreground"
+  >
+    Courses
+    <ChevronRight className="h-5 w-5 opacity-50" />
+  </button>
 
+  {/* --- Mobile Sub-Menu Overlay --- */}
+  {isMobileCoursesOpen && (
+    <div className="fixed inset-0 z-[60] bg-background animate-in slide-in-from-right duration-300 flex flex-col">
+      {/* Header of Sub-Menu */}
+      <div className="flex items-center p-4 border-b border-border">
+        <button 
+          onClick={() => setIsMobileCoursesOpen(false)}
+          className="flex items-center gap-2 text-green-600 font-semibold"
+        >
+          <ChevronDown className="h-5 w-5 rotate-90" /> {/* Back Arrow look */}
+          Back to Menu
+        </button>
+      </div>
 
-            {/* Ye sirf tabhi dikhega jab isMobileCoursesOpen true hoga */}
-            {isMobileCoursesOpen && (
-              <div className="grid grid-cols-2 gap-2 mt-3 pl-2 animate-in slide-in-from-top-2 duration-200">
-                {courses.map((course) => (
-                  <Link
-                    key={course.label}
-                    to={course.href}
-                    onClick={() => {
-                      setOpen(false); // Pura mobile menu band karne ke liye
-                      setIsMobileCoursesOpen(false); // Dropdown reset karne ke liye
-                    }}
-                    className="text-sm font-medium py-2 text-muted-foreground hover:text-primary active:text-primary"
-                  >
-                    {course.label}
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
+      {/* Courses List */}
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-4">
+        <h3 className="text-xl font-bold text-foreground mb-2">Our <span className="text-green-500">Courses</span> </h3>
+        {courses.map((course) => (
+          <Link
+            key={course.label}
+            to={course.href}
+            onClick={() => {
+              setOpen(false); // Main Mobile Menu band karega
+              setIsMobileCoursesOpen(false); // Sub-menu band karega
+            }}
+            className="flex items-center justify-between p-4 bg-secondary/30 rounded-xl text-base font-medium text-foreground hover:bg-secondary transition-colors"
+          >
+            {course.label}
+            <div className="h-2 w-2 rounded-full bg-yellow-400" />
+          </Link>
+        ))}
+      </div>
+
+      {/* Footer of Sub-Menu (Optional) 
+      <div className="p-4 border-t border-border bg-muted/20">
+        <p className="text-xs text-muted-foreground text-center">Select a course to view details</p>
+      </div>
+      */}
+    </div>
+  )}
+</div>
+
           <Link to="/study-material" onClick={() => setOpen(false)} className="block py-3 text-base font-semibold border-b border-border/50 text-foreground">
             Study Material
           </Link>

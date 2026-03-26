@@ -72,11 +72,11 @@ export default function ContactSection() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-wider text-blue-600 uppercase bg-blue-100 rounded-full">
+          <span className="inline-block px-4 py-1.5 mb-4 text-xs font-bold tracking-wider text-white uppercase bg-yellow-400 rounded-full">
             Admission Open 2026-27
           </span>
           <h2 className="text-3xl md:text-6xl font-extrabold text-slate-900 tracking-tight">
-            Apply for <span className="text-blue-600">Admission</span>
+            Apply for <span className="text-green-600">Admission</span>
           </h2>
           <p className="mt-4 text-slate-600 max-w-2xl mx-auto text-md">
            "Fill the digital enrollment form below to secure your seat for the 2026-27 session. Our team will contact you."
@@ -195,7 +195,7 @@ export default function ContactSection() {
                 disabled={isSubmitting}
               />
 
-              <Button type="submit" size="lg" className="w-full bg-blue-600 hover:bg-blue-700 h-12 rounded-xl text-lg font-semibold transition-all shadow-lg shadow-blue-200" disabled={isSubmitting}>
+              <Button type="submit" size="lg" className="w-full bg-green-600 hover:bg-green-700 h-12 rounded-xl text-lg font-semibold transition-all shadow-lg shadow-blue-200" disabled={isSubmitting}>
                 {isSubmitting ? (
                   <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Verifying...</>
                 ) : (

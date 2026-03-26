@@ -53,11 +53,11 @@ export default function GallerySection() {
       viewport={{ once: true }}
       className="text-center mb-16"
     >
-      <div className="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black tracking-[0.2em] uppercase mb-4 border border-primary/20">
+      <div className="inline-block px-4 py-1.5 rounded-full bg-yellow-400 text-white text-[10px] font-black tracking-[0.2em] uppercase mb-4 border border-primary/20">
         Inside Academy
       </div>
       <h2 className="text-3xl md:text-6xl font-black text-gray-900 tracking-tight mt-4">
-        Life at our  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-blue-600 to-indigo-600">Institute</span>
+        Life at <span className="text-green-600">our Institute</span>
       </h2>
       <p className="mt-6 text-gray-500 max-w-xl mx-auto text-sm md:text-lg leading-relaxed font-medium">
      "Explore Our Classrooms, Learning Environment, and Moments of Navodaya Success"

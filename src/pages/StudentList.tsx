@@ -42,12 +42,12 @@ const StudentList = () => {
   return (
     <div className="min-h-screen bg-slate-50 py-20">
       <div className="container mx-auto px-6 max-w-4xl">
-        <h1 className="text-4xl font-black text-center text-slate-900 mb-16 underline decoration-blue-500 underline-offset-8">चयनित विद्यार्थियों की गौरवशाली सूची</h1>
+        <h1 className="text-4xl font-black text-center text-slate-900 mb-16 underline decoration-yellow-400 underline-offset-8">चयनित विद्यार्थियों की गौरवशाली सूची</h1>
 
         {/* 2017-18 List */}
         <div className="mb-16">
-          <h2 className="text-2xl font-bold bg-blue-700 text-white px-6 py-3 rounded-t-2xl inline-block">वर्ष 2017 – 18 में चयनित विद्यार्थी</h2>
-          <div className="bg-white border-2 border-blue-700 p-6 rounded-b-2xl rounded-tr-2xl shadow-sm">
+          <h2 className="text-2xl font-bold bg-yellow-400 text-white px-6 py-3 rounded-t-2xl inline-block">वर्ष 2017 – 18 में चयनित विद्यार्थी</h2>
+          <div className="bg-white border-2 border-yellow-400 p-6 rounded-b-2xl rounded-tr-2xl shadow-sm">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-slate-700">
               {list2017.map((name, index) => (
                 <div key={index} className="p-3 border-b border-slate-100 hover:bg-slate-50 transition-colors">
