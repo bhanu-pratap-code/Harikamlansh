@@ -118,7 +118,7 @@ export default function FacultyManager() {
     <div className="max-w-6xl mx-auto space-y-8 pb-10">
       <Card className={`border-none shadow-xl transition-all duration-300 ${isEditing ? 'ring-2 ring-orange-400 bg-orange-50/20' : 'bg-white'}`}>
         <CardHeader className="pb-4">
-          <CardTitle className="text-2xl font-bold flex items-center gap-3 text-slate-800">
+          <CardTitle className="text-xl md:text-2xl font-bold flex items-center gap-3 text-slate-800">
             <div className={`p-2 rounded-lg ${isEditing ? 'bg-orange-100 text-orange-600' : 'bg-primary/10 text-primary'}`}>
               {isEditing ? <Pencil className="h-6 w-6" /> : <Plus className="h-6 w-6" />}
             </div>

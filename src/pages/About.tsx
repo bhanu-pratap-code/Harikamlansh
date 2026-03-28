@@ -120,7 +120,7 @@ const About = () => {
                 <div className="bg-white p-6 rounded-3xl shadow-xl border border-blue-100 flex gap-5">
                   <div className="bg-blue-600 p-3 rounded-2xl text-white text-3xl shrink-0">🎖️</div>
                   <div>
-                    <h4 className="font-extrabold text-lg md:text-xl text-gray-900">{content.awardTitle}</h4>
+                    <h4 className="font-extrabold text-base md:text-xl text-gray-900">{content.awardTitle}</h4>
                     <p className="text-blue-600 font-bold uppercase text-xs tracking-wide">{content.awardName}</p>
                     <p className="text-gray-500 text-xs italic">{content.awardExp}</p>
                   </div>

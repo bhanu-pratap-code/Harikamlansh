@@ -12,7 +12,7 @@ import StudyMaterialSection from "./components/StudyMaterialSection";
 import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import Payment from "./pages/Payment";
-import StudentList from "./pages/studentlist";
+import StudentList from "./pages/StudentList";
 
 const queryClient = new QueryClient();
 

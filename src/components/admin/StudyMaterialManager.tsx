@@ -31,12 +31,22 @@ export default function StudyMaterialManager() {
   const availableClasses = [...new Set(materials.map(m => m.student_class))];
   const availableSubjects = [...new Set(materials.map(m => m.subject))];
 
+  // --- UPDATED FILE UPLOAD (Cleans up storage on Edit) ---
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
       setIsUploading(true);
+
+      // Agar Edit kar rahe hain aur nayi file select ki, toh purani delete karo
+      if (editingId && form.file_url && form.file_url.includes('coaching_data/')) {
+        const oldPath = form.file_url.split('coaching_data/')[1]?.split('?')[0];
+        if (oldPath) {
+          await supabase.storage.from('coaching_data').remove([oldPath]);
+        }
+      }
+
       const filePath = `study/${Date.now()}_${file.name}`;
       
       const { error: uploadError } = await supabase.storage
@@ -47,7 +57,7 @@ export default function StudyMaterialManager() {
 
       const { data } = supabase.storage.from('coaching_data').getPublicUrl(filePath);
       setForm({ ...form, file_url: data.publicUrl });
-      toast.success("File uploaded to study folder!");
+      toast.success("New file uploaded!");
     } catch (error: any) {
       toast.error("Upload failed: " + error.message);
     } finally {
@@ -62,39 +72,41 @@ export default function StudyMaterialManager() {
     }
 
     setIsUploading(true);
-    if (editingId) {
-      const { error } = await supabase
-        .from("Coaching_StudyMaterial")
-        .update({
+    try {
+        const payload = {
             title: form.title,
             student_class: form.student_class,
             subject: form.subject,
             file_url: form.file_url
-        })
-        .eq("id", editingId);
-      
-      if (!error) {
-        toast.success("Material updated!");
-        setEditingId(null);
-      }
-    } else {
-      const { error } = await supabase
-        .from("Coaching_StudyMaterial")
-        .insert([{
-            title: form.title,
-            student_class: form.student_class,
-            subject: form.subject,
-            file_url: form.file_url
-        }]);
-      
-      if (!error) toast.success("Added to Library!");
-    }
+        };
 
-    setForm({ title: "", student_class: "", subject: "", file_url: "" });
-    setIsManualClass(false);
-    setIsManualSubject(false);
-    setIsUploading(false);
-    fetchMaterials();
+        if (editingId) {
+          const { error } = await supabase
+            .from("Coaching_StudyMaterial")
+            .update(payload)
+            .eq("id", editingId);
+          
+          if (error) throw error;
+          toast.success("Material updated!");
+          setEditingId(null);
+        } else {
+          const { error } = await supabase
+            .from("Coaching_StudyMaterial")
+            .insert([payload]);
+          
+          if (error) throw error;
+          toast.success("Added to Library!");
+        }
+
+        setForm({ title: "", student_class: "", subject: "", file_url: "" });
+        setIsManualClass(false);
+        setIsManualSubject(false);
+        fetchMaterials();
+    } catch (error: any) {
+        toast.error("Error: " + error.message);
+    } finally {
+        setIsUploading(false);
+    }
   };
 
   const startEdit = (m: any) => {
@@ -117,13 +129,36 @@ export default function StudyMaterialManager() {
     setIsManualSubject(false);
   };
 
+  // --- UPDATED REMOVE (Deletes from Storage + DB) ---
   const remove = async (id: string) => {
-    if(confirm("Delete this material?")) {
-        const { error } = await supabase.from("Coaching_StudyMaterial").delete().eq("id", id);
-        if (!error) {
-            toast.error("Material deleted");
-            fetchMaterials();
+    if(!confirm("Delete this material permanently?")) return;
+    
+    setIsUploading(true);
+    try {
+        // 1. Storage se file delete karne ke liye URL fetch karo
+        const { data: item } = await supabase
+            .from("Coaching_StudyMaterial")
+            .select("file_url")
+            .eq("id", id)
+            .single();
+
+        if (item?.file_url && item.file_url.includes('coaching_data/')) {
+            const filePath = item.file_url.split('coaching_data/')[1]?.split('?')[0];
+            if (filePath) {
+                await supabase.storage.from('coaching_data').remove([filePath]);
+            }
         }
+
+        // 2. DB record delete karo
+        const { error } = await supabase.from("Coaching_StudyMaterial").delete().eq("id", id);
+        if (error) throw error;
+
+        toast.error("Material deleted from storage and list");
+        fetchMaterials();
+    } catch (error: any) {
+        toast.error("Delete failed: " + error.message);
+    } finally {
+        setIsUploading(false);
     }
   };
 
@@ -131,10 +166,9 @@ export default function StudyMaterialManager() {
     <div className="w-full max-w-6xl mx-auto p-4 md:p-0 animate-in fade-in duration-500">
       <div className="mb-6 md:mb-8">
         <h2 className="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">Material Manager</h2>
-        <p className="text-slate-500 text-sm mt-1">Upload and organize PDF notes in coaching_data/study.</p>
+        <p className="text-slate-500 text-sm mt-1">Upload Your PDF Notes and keep storage clean.</p>
       </div>
 
-      {/* Input Section */}
       <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 mb-8 md:mb-10">
         <h3 className="text-xs md:text-sm font-bold uppercase tracking-wider text-primary mb-6 flex items-center gap-2">
           <FileUp className="h-4 w-4" /> {editingId ? "Update Document" : "Upload New Document"}
@@ -225,7 +259,6 @@ export default function StudyMaterialManager() {
         </div>
       </div>
 
-      {/* Materials List */}
       <div className="space-y-4 pb-10">
         <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 ml-1">All Materials ({materials.length})</h3>
         {materials.map((m) => (
@@ -260,7 +293,7 @@ export default function StudyMaterialManager() {
           </div>
         ))}
 
-        {materials.length === 0 && (
+        {materials.length === 0 && !isUploading && (
           <div className="text-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
             <FileText className="h-10 w-10 text-slate-300 mx-auto mb-3" />
             <p className="text-slate-400 text-sm italic">No study materials found.</p>

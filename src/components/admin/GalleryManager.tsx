@@ -30,6 +30,15 @@ export default function GalleryManager() {
 
     try {
       setLoading(true);
+
+      // --- CLEANUP OLD IMAGE ON EDIT ---
+      if (editingId && form.url && form.url.includes('coaching_data/')) {
+        const oldPath = form.url.split('coaching_data/')[1]?.split('?')[0];
+        if (oldPath) {
+          await supabase.storage.from('coaching_data').remove([oldPath]);
+        }
+      }
+
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `gallery/${fileName}`;
@@ -90,13 +99,37 @@ export default function GalleryManager() {
     setForm({ url: "", caption: "" });
   };
 
+  // --- UPDATED REMOVE WITH STORAGE CLEANUP ---
   const remove = async (id: string) => {
     if (!confirm("Are you sure you want to delete this image?")) return;
     
-    const { error } = await supabase.from("Coaching_Gallery").delete().eq("id", id);
-    if (!error) {
-      toast.error("Image removed");
+    setLoading(true);
+    try {
+      // 1. Image URL fetch karo storage se delete karne ke liye
+      const { data: item } = await supabase
+        .from("Coaching_Gallery")
+        .select("image_url")
+        .eq("id", id)
+        .single();
+
+      if (item?.image_url && item.image_url.includes('coaching_data/')) {
+        const filePath = item.image_url.split('coaching_data/')[1]?.split('?')[0];
+        if (filePath) {
+          await supabase.storage.from('coaching_data').remove([filePath]);
+        }
+      }
+
+      // 2. Database row delete karo
+      const { error } = await supabase.from("Coaching_Gallery").delete().eq("id", id);
+      
+      if (error) throw error;
+      
+      toast.error("Image and record removed");
       fetchGallery();
+    } catch (error: any) {
+      toast.error("Delete failed: " + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,7 +140,6 @@ export default function GalleryManager() {
         <p className="text-slate-500 text-sm mt-1">Upload photos from URL or your device gallery.</p>
       </div>
 
-      {/* Upload/Edit Card */}
       <div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 mb-10 transition-all hover:shadow-md">
         <h3 className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-primary mb-4">
           {editingId ? "Edit Image Details" : "Add New Image"}
@@ -154,7 +186,6 @@ export default function GalleryManager() {
             </div>
           </div>
 
-          {/* Preview Window */}
           <div className="h-40 md:h-full min-h-[160px] bg-slate-50 rounded-2xl border-2 border-dashed border-slate-200 flex items-center justify-center overflow-hidden">
             {form.url ? (
               <img src={form.url} className="w-full h-full object-cover" alt="Preview" />
@@ -180,7 +211,6 @@ export default function GalleryManager() {
         </div>
       </div>
 
-      {/* Gallery Grid */}
       <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 ml-1">Current Photos ({gallery.length})</h3>
       <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
         {gallery.map((g) => (
@@ -188,7 +218,6 @@ export default function GalleryManager() {
             <div className="aspect-square relative overflow-hidden">
               <img src={g.image_url} alt={g.caption} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
               
-              {/* Mobile Actions (Visible by default on touch) & Hover Actions (Desktop) */}
               <div className="absolute inset-0 bg-slate-900/60 sm:opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
                 <Button size="icon" variant="secondary" className="rounded-lg h-10 w-10 bg-white text-slate-900 hover:bg-primary hover:text-white shadow-xl" onClick={() => startEdit(g)}>
                   <Edit2 className="h-5 w-5" />

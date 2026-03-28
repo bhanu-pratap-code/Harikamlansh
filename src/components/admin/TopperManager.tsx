@@ -20,7 +20,6 @@ export default function TopperManager() {
     student_class: "", 
   });
 
-  // Database se list fetch karna
   const fetchToppers = async () => {
     setLoading(true);
     const { data, error } = await supabase
@@ -29,7 +28,7 @@ export default function TopperManager() {
       .order("created_at", { ascending: false });
     
     if (data) {
-      setToppers(data); // List ab state mein save hogi aur niche dikhegi
+      setToppers(data); 
     }
     setLoading(false);
   };
@@ -38,13 +37,23 @@ export default function TopperManager() {
     fetchToppers();
   }, []);
 
-  // Laptop/Mobile Gallery se upload
+  // --- UPDATED HANDLE FILE CHANGE (Cleans up old image on edit) ---
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
     try {
       setLoading(true);
+
+      // 1. AGAR EDIT MODE HAI: Toh nayi upload karne se pehle PURANI delete karo
+      if (isEditing && form.image && form.image.includes('coaching_data/')) {
+        const oldPath = form.image.split('coaching_data/')[1]?.split('?')[0];
+        if (oldPath) {
+          await supabase.storage.from('coaching_data').remove([oldPath]);
+        }
+      }
+
+      // 2. Nayi file upload karo
       const fileExt = file.name.split('.').pop();
       const fileName = `${Math.random()}.${fileExt}`;
       const filePath = `toppers/${fileName}`;
@@ -58,7 +67,7 @@ export default function TopperManager() {
       const { data } = supabase.storage.from('coaching_data').getPublicUrl(filePath);
       
       setForm({ ...form, image: data.publicUrl });
-      toast.success("Photo uploaded successfully!");
+      toast.success("New photo uploaded & old one replaced!");
     } catch (error: any) {
       toast.error("Upload failed: " + error.message);
     } finally {
@@ -73,7 +82,6 @@ export default function TopperManager() {
     }
 
     setLoading(true);
-    // Table columns mapping: name, percentage, batch_year, student_class, image_url
     const dbPayload = {
       name: form.name,
       percentage: Number(form.marks),
@@ -98,7 +106,7 @@ export default function TopperManager() {
         toast.success("Topper added successfully!");
       }
       resetForm();
-      fetchToppers(); // List refresh karna
+      fetchToppers(); 
     } catch (error: any) {
       toast.error("Error: " + error.message);
     } finally {
@@ -114,9 +122,9 @@ export default function TopperManager() {
 
   const handleEdit = (t: any) => {
     setForm({ 
-      name: t.name, 
-      marks: t.percentage.toString(), 
-      year: t.batch_year.toString(), 
+      name: t.name || "", 
+      marks: t.percentage ? t.percentage.toString() : "", 
+      year: t.batch_year ? t.batch_year.toString() : "", 
       image: t.image_url || "",
       student_class: t.student_class || ""
     });
@@ -125,14 +133,31 @@ export default function TopperManager() {
   };
 
   const remove = async (id: string) => {
-    if (!confirm("Remove this student?")) return;
+    if (!confirm("Remove this topper permanently?")) return;
+    
     setLoading(true);
-    const { error } = await supabase.from("Coaching_Toppers").delete().eq("id", id);
-    if (!error) {
-      toast.error("Topper removed");
+    try {
+      const { data: topper } = await supabase
+        .from("Coaching_Toppers")
+        .select("image_url")
+        .eq("id", id)
+        .single();
+
+      if (topper?.image_url && topper.image_url.includes('coaching_data/')) {
+        const filePath = topper.image_url.split('coaching_data/')[1]?.split('?')[0]; 
+        if (filePath) {
+          await supabase.storage.from('coaching_data').remove([filePath]);
+        }
+      }
+
+      await supabase.from("Coaching_Toppers").delete().eq("id", id);
+      toast.success("Removed successfully");
       fetchToppers();
+    } catch (error: any) {
+      toast.error("Error: " + error.message);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -143,7 +168,7 @@ export default function TopperManager() {
         </div>
         <div>
           <h2 className="text-2xl font-bold text-slate-800">Topper Management</h2>
-          <p className="text-sm text-slate-500">Add or Edit students via Upload or Image URL</p>
+          <p className="text-sm text-slate-500">Edit student records and keep storage clean</p>
         </div>
       </div>
 
@@ -156,7 +181,6 @@ export default function TopperManager() {
         </CardHeader>
         <CardContent>
           <div className="flex flex-col md:flex-row gap-6">
-            {/* Left: Preview & Local Upload */}
             <div className="flex flex-col items-center gap-3">
               <div 
                 className="h-32 w-32 rounded-full bg-slate-100 border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden relative group cursor-pointer"
@@ -176,7 +200,6 @@ export default function TopperManager() {
               <span className="text-[10px] font-bold text-slate-400 text-center uppercase">Upload from Device</span>
             </div>
 
-            {/* Right: Inputs & URL Support */}
             <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <label className="text-xs font-bold text-slate-600 flex items-center gap-1"><GraduationCap className="h-3 w-3"/> STUDENT NAME</label>
@@ -216,7 +239,6 @@ export default function TopperManager() {
         </CardContent>
       </Card>
 
-      {/* List Display Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {toppers.map((t) => (
           <Card key={t.id} className="overflow-hidden border-none shadow-sm hover:shadow-md transition-shadow bg-white">
