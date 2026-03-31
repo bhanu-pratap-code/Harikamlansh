@@ -62,7 +62,7 @@ export default function ToppersSection() {
             Meet Our <span className="block sm:inline text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 via-orange-500 to-yellow-600 whitespace-nowrap">Legendary Toppers</span>
           </h2>
           <p className="mt-6 text-gray-500 max-w-xl mx-auto text-lg leading-relaxed font-medium">
-          "Meet Our Navodaya Achievers Who Made Their Dreams a Reality"
+            "Meet Our Navodaya Achievers Who Made Their Dreams a Reality"
           </p>
         </motion.div>
 
@@ -95,13 +95,15 @@ export default function ToppersSection() {
                   )}
 
                   {/* Smart Percentage Badge (No Face Covering) */}
-                  <div className="absolute bottom-2 left-1/2 -translate-x-1/2 md:bottom-auto md:top-3 md:right-3 md:left-auto md:translate-x-0 z-20">
-                    <div className="px-3 py-1 md:px-4 md:py-2 rounded-full md:rounded-2xl bg-black/70 md:bg-black/40 backdrop-blur-md text-white border border-white/20 shadow-xl flex items-center justify-center whitespace-nowrap">
-                      <span className="text-[10px] md:text-lg font-black tracking-tighter">
-                        {t.percentage}%
-                      </span>
+                  {t.percentage && (
+                    <div className="absolute bottom-2 left-1/2 -translate-x-1/2 md:bottom-auto md:top-3 md:right-3 md:left-auto md:translate-x-0 z-20">
+                      <div className="px-3 py-1 md:px-4 md:py-2 rounded-full md:rounded-2xl bg-black/70 md:bg-black/40 backdrop-blur-md text-white border border-white/20 shadow-xl flex items-center justify-center whitespace-nowrap">
+                        <span className="text-[10px] md:text-lg font-black tracking-tighter">
+                          {t.percentage}%
+                        </span>
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   {/* Hover Overlay Glow */}
                   <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -114,12 +116,14 @@ export default function ToppersSection() {
                   </h3>
 
                   <div className="flex flex-col gap-1 mt-1 md:mt-2">
-                    <div className="inline-flex items-center justify-center gap-1.5 text-[10px] md:text-xs font-bold text-gray-500 uppercase tracking-widest">
+                    <div className="inline-flex items-center justify-center gap-1.5 text-[10px] md:text-xs font-bold text-gray-700 uppercase tracking-widest">
                       <span className="w-1 md:w-1.5 h-1 md:h-1.5 rounded-full bg-primary" /> Class {t.student_class}
                     </div>
-                    <div className="text-[8px] md:text-[10px] font-black text-yellow-600 uppercase bg-yellow-50/50 self-center px-2 md:px-3 py-0.5 md:py-1 rounded-full mt- border border-yellow-100/50">
-                      Batch {t.batch_year}
-                    </div>
+                    {t.batch_year && (
+                      <div className="text-[8px] md:text-[10px] font-black text-yellow-600 uppercase bg-yellow-50/50 self-center px-2 md:px-3 py-0.5 md:py-1 rounded-full mt- border border-yellow-100/50">
+                        {t.batch_year}
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

@@ -22,15 +22,37 @@ function ScrollToHash() {
 
   useEffect(() => {
     if (hash) {
-      setTimeout(() => {
-        const id = hash.replace("#", "");
+      const id = hash.replace("#", "");
+      
+      // Ye function tab tak check karega jab tak element mil na jaye (max 2 seconds tak)
+      let count = 0;
+      const checkAndScroll = setInterval(() => {
         const element = document.getElementById(id);
+        
         if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+          // Element mil gaya! Scroll karo aur interval band karo
+          const offset = 10; // Agar aapka navbar fixed hai, toh thoda gap dene ke liye
+          const bodyRect = document.body.getBoundingClientRect().top;
+          const elementRect = element.getBoundingClientRect().top;
+          const elementPosition = elementRect - bodyRect;
+          const offsetPosition = elementPosition - offset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+          });
+          
+          clearInterval(checkAndScroll);
         }
-      }, 300);
+
+        // Agar 20 baar check karne par bhi nahi mila (2 seconds), toh band karo
+        count++;
+        if (count > 20) clearInterval(checkAndScroll);
+      }, 100); // Har 100ms mein check karega
+
+      return () => clearInterval(checkAndScroll);
     } else {
-      window.scrollTo(0, 0);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   }, [hash, pathname]);
 

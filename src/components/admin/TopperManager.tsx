@@ -76,19 +76,23 @@ export default function TopperManager() {
   };
 
   const handleSubmit = async () => {
-    if (!form.name || !form.marks) {
-      toast.error("Please fill Name and Marks");
-      return;
-    }
+  // ❌ PURANA: if (!form.name || !form.marks) {
+  // ✅ NAYA: Ab sirf Name check karega
+  if (!form.name) {
+    toast.error("Please fill Student Name");
+    return;
+  }
 
-    setLoading(true);
-    const dbPayload = {
-      name: form.name,
-      percentage: Number(form.marks),
-      batch_year: Number(form.year),
-      image_url: form.image,
-      student_class: form.student_class,
-    };
+  setLoading(true);
+  
+  const dbPayload = {
+    name: form.name,
+    // Trim karke check kar rahe hain taaki khali space bhi na jaye
+    percentage: form.marks.trim() === "" ? null : form.marks, 
+    batch_year: form.year.trim() === "" ? null : form.year,
+    image_url: form.image,
+    student_class: form.student_class,
+  };
 
     try {
       if (isEditing) {

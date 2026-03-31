@@ -18,7 +18,7 @@ const About = () => {
       journeyTitle: "Our Journey Since 1985",
       journeyP1: "Founded in 1985, Harikamlansh Academy (formerly known as Navodaya Entrance Exam Coaching) has built a 40-year legacy of excellence in competitive school admissions. Our mission goes beyond just clearing exams; we focus on concept-based learning and self-study mastery to make students bold and proficient in Math, Reasoning, and Language. Our results speak for our dedication",
       journeyP2: "achieving an incredible milestone where 20 out of 80 district selections came from our institute alone, out of 5,000 total applicants. Today, we bring this unmatched expertise and proven success ratio to students across India through our specialized Online Mode, providing expert guidance for Navodaya, Sainik School, Shramodaya, and Rashtriya Military School entrance exams to help every aspirant secure their dream seat.",
-      awardTitle: "Guided by President Awardee Teacher",
+      awardTitle: "Guided by President Awarded Teacher",
       awardName: "Shri Mahesh Shrivastava Acharya",
       awardExp: "40+ Years of unmatched teaching expertise.",
       stats: [
