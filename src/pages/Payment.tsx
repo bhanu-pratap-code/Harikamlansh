@@ -4,10 +4,10 @@ import { QrCode, Smartphone, Copy, CheckCircle, MessageCircle } from 'lucide-rea
 const Payment = () => {
   // Aap apni details yahan update kar sakte hain
   const paymentDetails = {
-    upiId: "example@okaxis",
-    phone: "+91 98765-43210",
+    upiId: "nehabhanu@icici",
+    phone: "+91 88783 64974",
     whatsappNumber: "919876543210",
-    qrImageUrl: "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=example@okaxis" // Demo QR
+    qrImageUrl: "/qr-code.jpeg" // Demo QR
   };
 
   const copyToClipboard = (text) => {

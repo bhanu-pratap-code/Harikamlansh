@@ -13,6 +13,11 @@ import Navbar from "./components/Navbar";
 import About from "./pages/About";
 import Payment from "./pages/Payment";
 import StudentList from "./pages/StudentList";
+import Navodaya from "./pages/Navodaya";
+import Sainik from "./pages/Sainik";
+import Shramodaya from "./pages/Shramodaya";
+import Military from "./pages/Military";
+import LanguagePopup from "./components/LanguagePopup";
 
 const queryClient = new QueryClient();
 
@@ -61,12 +66,19 @@ function ScrollToHash() {
 
 function LayoutContent() {
   const location = useLocation();
-  const isAdminPage = location.pathname.startsWith("/admin");
+  const isAdminPage = location.pathname.startsWith("/admin") || location.pathname === "/admin-login";
 
   return (
     <>
       <ScrollToHash /> {/* 🔥 Ise yahan add kiya */}
-      {!isAdminPage && <Navbar />}
+
+    {!isAdminPage && (
+        <>
+          <LanguagePopup />
+          <Navbar />
+        </>
+      )}
+
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/admin-login" element={<AdminLogin />} />
@@ -75,6 +87,10 @@ function LayoutContent() {
         <Route path="/about" element={<About />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/studentlist" element={<StudentList />} />
+        <Route path="/navodaya" element={<Navodaya />} />
+        <Route path="/sainik" element={<Sainik />} />
+        <Route path="/shramodaya" element={<Shramodaya />} />
+        <Route path="/military" element={<Military />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </>

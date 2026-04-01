@@ -23,10 +23,33 @@
     
     <link rel="icon" type="image/jpeg" href="/logo.jpg" />
     <link rel="canonical" href="https://navodayaexam.com/" />
+
+<style>
+  /* Google toolbar aur branding ko hide karne ke liye */
+  .skiptranslate > iframe { display: none !important; }
+  body { top: 0px !important; }
+  .goog-te-gadget { display: none !important; }
+</style>
+
   </head>
 
   <body>
     <div id="root"></div>
+
+<div id="google_translate_element" style="position: absolute; top: -9999px; left: -9999px; opacity: 0; pointer-events: none;"></div>
+
+<script type="text/javascript">
+  // Ise window. function karke likhein taaki Google script ise kahin se bhi dhund sake
+  window.googleTranslateElementInit = function() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'hi,en',
+      autoDisplay: false
+    }, 'google_translate_element');
+  }
+</script>
+<script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
     <script type="module" src="/src/main.tsx"></script>
     
     <noscript>

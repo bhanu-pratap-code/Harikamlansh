@@ -13,10 +13,10 @@ const links = [
 
 // Courses for Dropdown
 const courses = [
-  { label: "Navodaya Entrance Exam", href: "/study-material" },
-  { label: "Sainik School Entrance Exam", href: "/study-material" },
-  { label: "Shramodaya School Entrance Exam", href: "/study-material" },
-  { label: "Rastriya Milititary School Exam", href: "/study-material" },
+  { label: "Navodaya Entrance Exam", href: "/navodaya" },
+  { label: "Sainik School Entrance Exam", href: "/sainik" },
+  { label: "Shramodaya School Entrance Exam", href: "/shramodaya" },
+  { label: "Rastriya Milititary School Exam", href: "/military" },
 ];
 
 export default function Navbar() {
