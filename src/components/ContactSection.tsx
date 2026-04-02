@@ -121,8 +121,8 @@ export default function ContactSection() {
                   className="w-full p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
                 >
                   <option value="">Select Class/Courses</option>
-                  <option value="school">School Classes (5th - 12th)</option>
-                  <option value="competitive">Navodaya Exams</option>
+                  <option value="school">School Classes (5th - 8th)</option>
+                  <option value="competitive">Competitive Exams</option>
                 </select>
 
                 {category === "school" && (
@@ -136,7 +136,7 @@ export default function ContactSection() {
                       className="p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none"
                     >
                       <option value="">Select Class</option>
-                      {[5,6,7,8,9,10,11,12].map(num => (
+                      {[5,6,7,8].map(num => (
                         <option key={num} value={num}>{num}th Standard</option>
                       ))}
                     </select>
@@ -151,12 +151,12 @@ export default function ContactSection() {
                       }}
                       className="p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none disabled:opacity-50"
                     >
-                      <option value="">Select Subject/Exam</option>
+                      {/* <option value="">Select Subject/Exam</option>
                        <option value="Navodaya entrance exam">Navodaya Entrance Exam</option>
                        <option value="Sainik school entrance">Sainik School Entrance Exam</option>
                        <option value="Shramodaya school entrance exam">Shramodaya School Entrance Exam</option>
                        <option value="Rastriya military school entrance exam">Rastriya Military School Entrance Exam</option>
-                  
+                   */}
                       <option value="Mathematics">Mathematics</option>
                       <option value="Science">Science</option>
                       <option value="Physics">Physics</option>
