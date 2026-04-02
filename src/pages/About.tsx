@@ -22,7 +22,7 @@ const About = () => {
       awardName: "Shri Mahesh Shrivastava Acharya",
       awardExp: "40+ Years of unmatched teaching expertise.",
       stats: [
-        { label: "Students Trained", value: "10,000+" },
+        { label: "Students Trained", value: "4,000+" },
         { label: "Success Rate", value: "100%" },
         { label: "Expert Faculty", value: "3+" },
         { label: "Years Excellence", value: "40+" },

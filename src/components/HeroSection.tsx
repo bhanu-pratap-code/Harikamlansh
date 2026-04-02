@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/supabaseClient";
 
 const stats = [
-  { icon: Users, value: "10000+", label: "Students Taught" },
-  { icon: Trophy, value: "1000+", label: "District Selections" },
+  { icon: Users, value: "4000+", label: "Students Taught" },
+  { icon: Trophy, value: "400+", label: "District Selections" },
   { icon: Clock, value: "40+", label: "Years of Excellence (Since-1985)" },
 ];
 

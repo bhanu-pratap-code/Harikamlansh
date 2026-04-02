@@ -23,20 +23,20 @@ const queryClient = new QueryClient();
 
 // 🔥 Scroll Logic: Ye function hash (#) dekh kar sahi jagah scroll karega
 function ScrollToHash() {
-  const { hash, pathname } = useLocation();
+  // 1. 'key' ko bhi nikaal lein
+  const { hash, pathname, key } = useLocation(); 
 
   useEffect(() => {
     if (hash) {
       const id = hash.replace("#", "");
       
-      // Ye function tab tak check karega jab tak element mil na jaye (max 2 seconds tak)
       let count = 0;
       const checkAndScroll = setInterval(() => {
         const element = document.getElementById(id);
         
         if (element) {
-          // Element mil gaya! Scroll karo aur interval band karo
-          const offset = 10; // Agar aapka navbar fixed hai, toh thoda gap dene ke liye
+          // Element mil gaya!
+          const offset = 80; // Mobile/Desktop navbar ke liye 80px ka gap rakhein
           const bodyRect = document.body.getBoundingClientRect().top;
           const elementRect = element.getBoundingClientRect().top;
           const elementPosition = elementRect - bodyRect;
@@ -50,16 +50,18 @@ function ScrollToHash() {
           clearInterval(checkAndScroll);
         }
 
-        // Agar 20 baar check karne par bhi nahi mila (2 seconds), toh band karo
         count++;
         if (count > 20) clearInterval(checkAndScroll);
-      }, 100); // Har 100ms mein check karega
+      }, 100);
 
       return () => clearInterval(checkAndScroll);
     } else {
+      // Agar home page par click kiya (bina hash ke), toh top par jaye
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }, [hash, pathname]);
+    
+    // 🔥 KEY ADD KIYA: Ab har click par ye useEffect dobara chalega!
+  }, [hash, pathname, key]); 
 
   return null;
 }
@@ -78,7 +80,7 @@ function LayoutContent() {
           <Navbar />
         </>
       )}
-
+<div className={isAdminPage ? "notranslate" : ""}>
       <Routes>
         <Route path="/" element={<Index />} />
         <Route path="/admin-login" element={<AdminLogin />} />
@@ -93,6 +95,7 @@ function LayoutContent() {
         <Route path="/military" element={<Military />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      </div>
     </>
   );
 }
