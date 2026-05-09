@@ -5,12 +5,16 @@ import { Languages } from "lucide-react";
 export default function LanguagePopup() {
   const [isOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    const hasChosen = sessionStorage.getItem('language_chosen');
-    if (!hasChosen) {
-      setIsOpen(true);
-    }
-  }, []);
+useEffect(() => {
+  const hasChosen = sessionStorage.getItem('language_chosen');
+
+  if (!hasChosen) {
+    // fresh session -> clear old translation
+    document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    
+    setIsOpen(true);
+  }
+}, []);
 
  const handleSelection = (lang: 'en' | 'hi') => {
     sessionStorage.setItem('language_chosen', 'true');
@@ -23,7 +27,7 @@ export default function LanguagePopup() {
       // 2. Agar dropdown mil jaye toh reset karein
       const selectField = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
       if (selectField) {
-        selectField.value = ''; // Google mein empty string matlab 'Original'
+        selectField.value = 'en'; // Google mein empty string matlab 'Original'
         selectField.dispatchEvent(new Event("change", { bubbles: true }));
       }
       
