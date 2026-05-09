@@ -34,27 +34,54 @@ export default function HeroSection() {
     }
   }
 
-  const renderHeading = () => {
-    const rawHeading = heroData?.heading || "Where Excellence Meets Ambition";
-    const highlightWord = heroData?.highlight_word || ""; // Admin panel se aane wala word
-    const words = rawHeading.split(/\s+/).filter(Boolean);
+const renderHeading = () => {
+  const rawHeading =
+    heroData?.heading || "Where Excellence Meets Ambition";
 
-    return words.map((word, index) => {
-      // Logic: Agar word highlightWord se match karta hai (case-insensitive)
-      const isHighlighted = word.toLowerCase().replace(/[^\w]/g, '') === highlightWord.toLowerCase().replace(/[^\w]/g, '');
+  const highlightWord =
+    heroData?.highlight_word || "";
 
-      return (
-        <span key={index}>
-          <span className={isHighlighted ? "text-yellow-400" : ""}>
-            {word}
-          </span>
-          {index !== words.length - 1 && " "}
-          {/* Aap chahen to line break ka logic bhi dynamic kar sakte hain, abhi ke liye ye 2nd word ke baad hi hai */}
-          {index === 1 && <br className="hidden md:block" />}
+  const words = rawHeading.split(/\s+/).filter(Boolean);
+
+  return words.map((word, index) => {
+
+    const cleanWord = word
+      .toLowerCase()
+      .replace(/[^\w]/g, '');
+
+    // Existing yellow highlight
+    const isYellow =
+      cleanWord ===
+      highlightWord
+        .toLowerCase()
+        .replace(/[^\w]/g, '');
+
+    // NEW green highlight for Sainik
+    const isGreen = cleanWord === "sainik";
+
+    return (
+      <span key={index}>
+        <span
+          className={
+            isYellow
+              ? "text-yellow-400"
+              : isGreen
+              ? "text-green-400"
+              : ""
+          }
+        >
+          {word}
         </span>
-      );
-    });
-  };
+
+        {index !== words.length - 1 && " "}
+
+        {index === 1 && (
+          <br className="hidden md:block" />
+        )}
+      </span>
+    );
+  });
+};
 
   const containerVariants = {
     hidden: { opacity: 0 },

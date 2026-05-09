@@ -146,17 +146,34 @@ export default function HeroManager() {
 };
 
   // Helper for Preview Highlight
-  const renderPreviewHeading = () => {
-    const text = form.heading || DEFAULT_HERO.heading;
-    const highlight = form.highlight_word.toLowerCase();
-    if (!highlight) return text;
+const renderPreviewHeading = () => {
+  const text = form.heading || DEFAULT_HERO.heading;
+  const highlight = form.highlight_word.toLowerCase();
 
-    return text.split(/\s+/).map((word, i) => (
-      <span key={i} className={word.toLowerCase().replace(/[^\w]/g, '') === highlight ? "text-primary" : ""}>
-        {word}{" "}
-      </span>
-    ));
-  };
+  return text.split(/\s+/).map((word, i) => {
+    const cleanWord = word.toLowerCase().replace(/[^\w]/g, '');
+
+    // Existing yellow highlight
+    if (cleanWord === highlight) {
+      return (
+        <span key={i} className="text-yellow-500">
+          {word}{" "}
+        </span>
+      );
+    }
+
+    // NEW GREEN highlight for Sainik
+    if (cleanWord === "sainik") {
+      return (
+        <span key={i} className="text-green-500">
+          {word}{" "}
+        </span>
+      );
+    }
+
+    return <span key={i}>{word} </span>;
+  });
+};
 
   return (
     <div className="w-full max-w-6xl mx-auto p-4 md:p-6 space-y-6">
