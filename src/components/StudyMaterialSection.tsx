@@ -17,9 +17,19 @@ export default function StudyMaterialSection() {
   const [loading, setLoading] = useState(false);
   const [selectedClass, setSelectedClass] = useState("");
   const [selectedSubject, setSelectedSubject] = useState("");
-  const [showMorePdfs, setShowMorePdfs] = useState(false); 
+  const [showMorePdfs, setShowMorePdfs] = useState(false);
   const [videos, setVideos] = useState<any[]>([]);
   const [showAllVideos, setShowAllVideos] = useState(false);
+
+  const isNewMaterial = (createdAt: string) => {
+    const uploadDate = new Date(createdAt).getTime();
+    const currentDate = new Date().getTime();
+
+    const diffInDays =
+      (currentDate - uploadDate) / (1000 * 60 * 60 * 24);
+
+    return diffInDays <= 7;
+  };
 
   // --- Logic 1: Check Access First ---
   useEffect(() => {
@@ -82,7 +92,7 @@ export default function StudyMaterialSection() {
       const { data: matData, error: matError } = await supabase
         .from("Coaching_StudyMaterial")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: true });
 
       if (matData) {
         setMaterials(matData);
@@ -97,7 +107,7 @@ export default function StudyMaterialSection() {
       const { data: vidData, error: vidError } = await supabase
         .from('video_lectures')
         .select('*')
-        .order('created_at', { ascending: false });
+        .order('created_at', { ascending: true });
 
       if (vidData) setVideos(vidData);
     } catch (err) {
@@ -114,7 +124,7 @@ export default function StudyMaterialSection() {
     setSelectedClass(c);
     const firstSubject = materials.find(m => m.student_class === c)?.subject;
     setSelectedSubject(firstSubject ?? "");
-    setShowMorePdfs(false); 
+    setShowMorePdfs(false);
   };
   const filtered = materials.filter(m => m.student_class === selectedClass && m.subject === selectedSubject);
   const visiblePdfs = showMorePdfs ? filtered : filtered.slice(0, 6);
@@ -132,7 +142,7 @@ export default function StudyMaterialSection() {
         <h2 className="text-3xl font-black text-slate-800 uppercase">Access Revoked</h2>
         <p className="text-slate-500 max-w-md mt-2 font-medium">"Your access has been revoked. Please contact the academy for further information.</p>
 
-<Button 
+        <Button
           variant="outline"
           className="mt-8 border-slate-200 text-slate-600 hover:bg-slate-50 font-bold px-8 rounded-full"
           onClick={() => {
@@ -165,95 +175,95 @@ export default function StudyMaterialSection() {
   }
 
   // 3. If No Request Found (Show Form)
-if (accessStatus !== 'approved') {
-  return (
-    // Responsive Padding: Mobile pe p-4, Tablet/Laptop pe p-20
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 md:p-20">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }} 
-        animate={{ opacity: 1, y: 0 }} 
-        // Responsive Width & Corners: Mobile pe w-full, Laptop pe max-w-md
-        className="max-w-md w-full bg-white rounded-3xl md:rounded-[2.5rem] shadow-2xl p-6 md:p-10 border border-slate-100 my-8"
-      >
-        <div className="text-center mb-6 md:mb-8">
-          <div className="inline-flex p-4 bg-green-50 text-green-600 rounded-3xl mb-4 border border-green-100">
-            <Lock size={32} />
-          </div>
-          <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase">Unlock Material</h2>
-          <p className="text-xs md:text-sm text-slate-500 font-bold mt-2">Enter details to request study access</p>
-        </div>
-
-        <form onSubmit={handleRequestAccess} className="space-y-4 md:space-y-5">
-          {/* Full Name Field */}
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Full Name</label>
-            <div className="relative">
-              <User className="absolute left-4 top-3.5 text-slate-400" size={18} />
-              <Input 
-                required 
-                placeholder="Student Name" 
-                className="pl-12 h-12 md:h-14 bg-slate-50 border-none rounded-2xl focus-visible:ring-green-500" 
-                value={studentForm.name} 
-                onChange={(e) => setStudentForm({...studentForm, name: e.target.value})} 
-              />
+  if (accessStatus !== 'approved') {
+    return (
+      // Responsive Padding: Mobile pe p-4, Tablet/Laptop pe p-20
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 md:p-20">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          // Responsive Width & Corners: Mobile pe w-full, Laptop pe max-w-md
+          className="max-w-md w-full bg-white rounded-3xl md:rounded-[2.5rem] shadow-2xl p-6 md:p-10 border border-slate-100 my-8"
+        >
+          <div className="text-center mb-6 md:mb-8">
+            <div className="inline-flex p-4 bg-green-50 text-green-600 rounded-3xl mb-4 border border-green-100">
+              <Lock size={32} />
             </div>
+            <h2 className="text-xl md:text-2xl font-black text-slate-900 uppercase">Unlock Material</h2>
+            <p className="text-xs md:text-sm text-slate-500 font-bold mt-2">Enter details to request study access</p>
           </div>
 
-          {/* Mobile Number Field */}
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Mobile Number</label>
-            <div className="relative">
-              <Phone className="absolute left-4 top-3.5 text-slate-400" size={18} />
-              <Input 
-                required 
-                type="tel" 
-                placeholder="Mobile Number" 
-                className="pl-12 h-12 md:h-14 bg-slate-50 border-none rounded-2xl focus-visible:ring-green-500" 
-                value={studentForm.mobile} 
-                onChange={(e) => setStudentForm({...studentForm, mobile: e.target.value})} 
-              />
+          <form onSubmit={handleRequestAccess} className="space-y-4 md:space-y-5">
+            {/* Full Name Field */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Full Name</label>
+              <div className="relative">
+                <User className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                <Input
+                  required
+                  placeholder="Student Name"
+                  className="pl-12 h-12 md:h-14 bg-slate-50 border-none rounded-2xl focus-visible:ring-green-500"
+                  value={studentForm.name}
+                  onChange={(e) => setStudentForm({ ...studentForm, name: e.target.value })}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Class Field */}
-          <div className="space-y-1.5">
-            <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Class</label>
-            <div className="relative">
-              <GraduationCap className="absolute left-4 top-3.5 text-slate-400" size={18} />
-              <Input 
-                required 
-                placeholder="e.g. 10th Standard" 
-                className="pl-12 h-12 md:h-14 bg-slate-50 border-none rounded-2xl focus-visible:ring-green-500" 
-                value={studentForm.class} 
-                onChange={(e) => setStudentForm({...studentForm, class: e.target.value})} 
-              />
+            {/* Mobile Number Field */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Mobile Number</label>
+              <div className="relative">
+                <Phone className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                <Input
+                  required
+                  type="tel"
+                  placeholder="Mobile Number"
+                  className="pl-12 h-12 md:h-14 bg-slate-50 border-none rounded-2xl focus-visible:ring-green-500"
+                  value={studentForm.mobile}
+                  onChange={(e) => setStudentForm({ ...studentForm, mobile: e.target.value })}
+                />
+              </div>
             </div>
-          </div>
 
-          {/* Submit Button */}
-          <Button 
-            disabled={isSubmitting} 
-            className="w-full h-12 md:h-14 bg-green-600 hover:bg-green-700 text-white font-black rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 text-base mt-2"
-          >
-            {isSubmitting ? (
-              <Loader2 className="animate-spin" />
-            ) : (
-              <>
-                <Send size={18} className="mr-2" /> REQUEST ACCESS
-              </>
-            )}
-          </Button>
-        </form>
-      </motion.div>
-    </div>
-  );
-}
+            {/* Class Field */}
+            <div className="space-y-1.5">
+              <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Class</label>
+              <div className="relative">
+                <GraduationCap className="absolute left-4 top-3.5 text-slate-400" size={18} />
+                <Input
+                  required
+                  placeholder="e.g. 10th Standard"
+                  className="pl-12 h-12 md:h-14 bg-slate-50 border-none rounded-2xl focus-visible:ring-green-500"
+                  value={studentForm.class}
+                  onChange={(e) => setStudentForm({ ...studentForm, class: e.target.value })}
+                />
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <Button
+              disabled={isSubmitting}
+              className="w-full h-12 md:h-14 bg-green-600 hover:bg-green-700 text-white font-black rounded-2xl shadow-xl shadow-green-100 transition-all active:scale-95 text-base mt-2"
+            >
+              {isSubmitting ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                <>
+                  <Send size={18} className="mr-2" /> REQUEST ACCESS
+                </>
+              )}
+            </Button>
+          </form>
+        </motion.div>
+      </div>
+    );
+  }
 
   // 4. APPROVED (Your Original UI)
   return (
     <div className="bg-[#F8FAFC] min-h-screen">
       {loading && <div className="fixed inset-0 bg-white/80 z-50 flex items-center justify-center"><Loader2 className="animate-spin text-primary" size={40} /></div>}
-      
+
       {/* --- Section 1: PDF Materials (Your Original Code) --- */}
       <section id="material" className="relative py-8 mt-10 md:py-20 h-auto overflow-y-visible">
         <div className="container mx-auto px-4 pt-20 md:pt-0">
@@ -298,10 +308,23 @@ if (accessStatus !== 'approved') {
                         <FileText size={24} />
                       </div>
                       <div className="min-w-0 flex-1 text-left">
-                        <div className="flex items-center gap-2 mb-0.5">
-                          <p className="font-extrabold text-slate-800 truncate text-sm md:text-base">{m.title}</p>
-                          <span className="hidden md:inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">PDF</span>
+
+                        <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                          <p className="font-extrabold text-slate-800 truncate text-sm md:text-base">
+                            {m.title}
+                          </p>
+
+                          <span className="hidden md:inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">
+                            PDF
+                          </span>
+
+                          {isNewMaterial(m.created_at) && (
+                            <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500 text-white uppercase animate-pulse">
+                              NEW
+                            </span>
+                          )}
                         </div>
+                        
                         <div className="flex items-center gap-3">
                           <span className="text-xs font-semibold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-md">{m.subject}</span>
                           <span className="text-[14px] font-medium text-gray-500 flex items-center gap-1">

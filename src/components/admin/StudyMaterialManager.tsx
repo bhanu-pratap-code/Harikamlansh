@@ -8,6 +8,10 @@ import { toast } from "sonner";
 export default function StudyMaterialManager() {
   const [materials, setMaterials] = useState<any[]>([]); 
   const [form, setForm] = useState({ title: "", student_class: "", subject: "", file_url: "" });
+
+  const [filterClass, setFilterClass] = useState<string>("all");
+  const [filterSubject, setFilterSubject] = useState<string>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   
   const [isManualClass, setIsManualClass] = useState(false);
   const [isManualSubject, setIsManualSubject] = useState(false);
@@ -30,6 +34,21 @@ export default function StudyMaterialManager() {
 
   const availableClasses = [...new Set(materials.map(m => m.student_class))];
   const availableSubjects = [...new Set(materials.map(m => m.subject))];
+
+const filteredList = materials.filter((m) => {
+  const matchClass =
+    filterClass === "all" || m.student_class === filterClass;
+
+  const matchSubject =
+    filterSubject === "all" || m.subject === filterSubject;
+
+  const matchSearch =
+    m.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    m.subject.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    m.student_class.toString().includes(searchQuery.toLowerCase());
+
+  return matchClass && matchSubject && matchSearch;
+});
 
   // --- UPDATED FILE UPLOAD (Cleans up storage on Edit) ---
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -238,7 +257,7 @@ export default function StudyMaterialManager() {
             <label className="text-[11px] font-semibold text-slate-600 ml-1">PDF File / URL</label>
             <div className="flex gap-2">
               <Input className="rounded-xl flex-1 text-xs h-11 md:h-10" placeholder="Paste link or upload" value={form.file_url} onChange={(e) => setForm({ ...form, file_url: e.target.value })} />
-              <input type="file" accept=".pdf" className="hidden" ref={fileInputRef} onChange={handleFileUpload} />
+              <input type="file" accept=".pdf,.jpg,.jpeg,.png,.webp" className="hidden" ref={fileInputRef} onChange={handleFileUpload} />
               <Button variant="outline" type="button" className="rounded-xl shrink-0 border-slate-200 h-11 md:h-10 px-3" onClick={() => fileInputRef.current?.click()} disabled={isUploading}>
                 {isUploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Upload className="h-4 w-4" />}
               </Button>
@@ -259,9 +278,102 @@ export default function StudyMaterialManager() {
         </div>
       </div>
 
-      <div className="space-y-4 pb-10">
-        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 ml-1">All Materials ({materials.length})</h3>
-        {materials.map((m) => (
+
+     <div className="space-y-4 pb-10">
+
+  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+
+    <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 ml-1">
+      All Materials ({filteredList.length})
+    </h3>
+
+    <div className="flex flex-col gap-3 w-full md:w-auto">
+
+      {/* Search */}
+      <Input
+        placeholder="Search by title, subject or class..."
+        className="rounded-xl h-10 text-sm md:w-[280px]"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+
+      {/* Class Filters */}
+      <div className="flex flex-wrap gap-2">
+
+        <div className="flex bg-slate-100 p-1 rounded-xl overflow-x-auto no-scrollbar">
+          <button
+            onClick={() => {
+              setFilterClass("all");
+              setFilterSubject("all");
+            }}
+            className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+              filterClass === "all"
+                ? "bg-white shadow-sm text-primary"
+                : "text-slate-500"
+            }`}
+          >
+            All Classes
+          </button>
+
+          {availableClasses.sort().map((c) => (
+            <button
+              key={c}
+              onClick={() => {
+                setFilterClass(c);
+                setFilterSubject("all");
+              }}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all whitespace-nowrap ${
+                filterClass === c
+                  ? "bg-white shadow-sm text-primary"
+                  : "text-slate-500"
+              }`}
+            >
+              Class {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Subject Filters */}
+        {filterClass !== "all" && (
+          <div className="flex bg-blue-50 p-1 rounded-xl overflow-x-auto no-scrollbar border border-blue-100">
+
+            <button
+              onClick={() => setFilterSubject("all")}
+              className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all ${
+                filterSubject === "all"
+                  ? "bg-blue-600 text-white"
+                  : "text-blue-600"
+              }`}
+            >
+              All Subjects
+            </button>
+
+            {[
+              ...new Set(
+                materials
+                  .filter((m) => m.student_class === filterClass)
+                  .map((m) => m.subject)
+              ),
+            ].map((s) => (
+              <button
+                key={s}
+                onClick={() => setFilterSubject(s)}
+                className={`px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all whitespace-nowrap ${
+                  filterSubject === s
+                    ? "bg-blue-600 text-white"
+                    : "text-blue-600"
+                }`}
+              >
+                {s}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+  {filteredList.map((m) => (
+
           <div key={m.id} className="group flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 bg-white rounded-2xl border border-slate-200 hover:border-primary/40 transition-all shadow-sm gap-4">
             <div className="flex items-center gap-4">
               <div className="h-10 w-10 md:h-12 md:w-12 shrink-0 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all">
@@ -293,7 +405,7 @@ export default function StudyMaterialManager() {
           </div>
         ))}
 
-        {materials.length === 0 && !isUploading && (
+       {filteredList.length === 0 && !isUploading && (
           <div className="text-center py-20 bg-slate-50 rounded-3xl border-2 border-dashed border-slate-200">
             <FileText className="h-10 w-10 text-slate-300 mx-auto mb-3" />
             <p className="text-slate-400 text-sm italic">No study materials found.</p>
