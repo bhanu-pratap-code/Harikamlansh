@@ -5,59 +5,71 @@ import { Languages } from "lucide-react";
 export default function LanguagePopup() {
   const [isOpen, setIsOpen] = useState(false);
 
-useEffect(() => {
-  const hasChosen = sessionStorage.getItem('language_chosen');
+  useEffect(() => {
+    const hasChosen = sessionStorage.getItem('language_chosen');
 
-  if (!hasChosen) {
-    // fresh session -> clear old translation
-    document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    
-    setIsOpen(true);
-  }
-}, []);
+    if (!hasChosen) {
+      // fresh session -> clear old translation
+      document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 
- const handleSelection = (lang: 'en' | 'hi') => {
+      setIsOpen(true);
+    }
+  }, []);
+
+  const handleSelection = (lang: 'en' | 'hi') => {
     sessionStorage.setItem('language_chosen', 'true');
 
     if (lang === 'en') {
       // 1. Google ki set ki hui cookies ko clear karne ki koshish
       document.cookie = "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
       document.cookie = "googtrans=/en/en; path=/;"; // Force English cookie
-      
+
       // 2. Agar dropdown mil jaye toh reset karein
       const selectField = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
       if (selectField) {
         selectField.value = 'en'; // Google mein empty string matlab 'Original'
         selectField.dispatchEvent(new Event("change", { bubbles: true }));
       }
-      
+
       // 3. Sabse zaruri: Page ko reload karein taaki Google ka translation state clean ho jaye
       setIsOpen(false);
-      window.location.reload(); 
+      window.location.reload();
       return;
     }
 
     // Hindi trigger logic
+    // Hindi translation logic
     const triggerGoogleTranslate = (targetLang: string) => {
       const selectField = document.querySelector(".goog-te-combo") as HTMLSelectElement | null;
-      
+
       if (selectField) {
+        // Cookie set karo
+        document.cookie = `googtrans=/en/${targetLang}; path=/;`;
+
+        // Google dropdown trigger karo
         selectField.value = targetLang;
         selectField.dispatchEvent(new Event("change", { bubbles: true }));
-        selectField.dispatchEvent(new Event("input", { bubbles: true }));
-        setIsOpen(false); 
+
+        // Popup close
+        setIsOpen(false);
+
+        // IMPORTANT: Full reload
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+
       } else {
-        // Agar engine load nahi hua toh 500ms baad fir koshish karein
         setTimeout(() => triggerGoogleTranslate(targetLang), 500);
       }
     };
 
-    // Translation trigger karein
+    // Translation start
     triggerGoogleTranslate(lang);
 
     // Popup ko band karne ke liye state update
     setTimeout(() => {
       setIsOpen(false);
+      window.location.reload();
     }, 800);
   };
 
@@ -79,14 +91,14 @@ useEffect(() => {
         </p>
 
         <div className="flex flex-col gap-4">
-          <Button 
+          <Button
             onClick={() => handleSelection('hi')}
             className="h-16 rounded-2xl bg-yellow-500 hover:bg-yellow-600 text-white font-black text-xl shadow-[0_4px_0_rgb(202,138,4)] active:translate-y-1 active:shadow-none transition-all"
           >
             हिंदी में देखें
           </Button>
-          
-          <Button 
+
+          <Button
             variant="ghost"
             onClick={() => handleSelection('en')}
             className="h-12 rounded-xl text-slate-400 font-bold hover:bg-slate-100 hover:text-slate-600 transition-colors"

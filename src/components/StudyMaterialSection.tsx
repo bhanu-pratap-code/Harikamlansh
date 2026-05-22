@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { Download, FileText, Loader2, ChevronDown, ChevronUp, Lock, Send, User, Phone, GraduationCap, Clock, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"; // Make sure this import exists
@@ -48,7 +48,7 @@ export default function StudyMaterialSection() {
         .from('student_approvals')
         .select('status')
         .eq('mobile', mobile)
-        .single();
+        .maybeSingle();
 
       if (data) {
         setAccessStatus(data.status);
@@ -76,7 +76,7 @@ export default function StudyMaterialSection() {
         } else throw error;
       } else {
         localStorage.setItem("student_mobile", studentForm.mobile);
-        setAccessStatus('pending');
+        window.location.reload();
       }
     } catch (err: any) {
       alert("Error: " + err.message);
@@ -140,7 +140,7 @@ export default function StudyMaterialSection() {
       <div className="min-h-screen flex flex-col items-center justify-center bg-white p-6 text-center">
         <XCircle size={80} className="text-red-500 mb-4" />
         <h2 className="text-3xl font-black text-slate-800 uppercase">Access Revoked</h2>
-        <p className="text-slate-500 max-w-md mt-2 font-medium">"Your access has been revoked. Please contact the academy for further information.</p>
+        <p className="text-slate-500 max-w-md mt-2 font-medium">"Your access has been revoked. Please contact the academy for further information."</p>
 
         <Button
           variant="outline"
@@ -166,7 +166,7 @@ export default function StudyMaterialSection() {
           <Clock size={60} />
         </div>
         <h2 className="text-3xl font-black text-slate-800 uppercase tracking-tight">Approval Pending</h2>
-        <p className="text-slate-500 max-w-sm mt-3 font-medium">A"Your request has been submitted. Once approved by the admin, all materials will be visible here."</p>
+        <p className="text-slate-500 max-w-sm mt-3 font-medium">"Your request has been submitted. Once approved by the admin, all materials will be visible here."</p>
         <Button onClick={() => checkAccess(localStorage.getItem("student_mobile") || "")} className="mt-8 bg-yellow-500 hover:bg-yellow-600 px-10 rounded-full font-bold h-12">
           Check Status Again
         </Button>
@@ -179,12 +179,7 @@ export default function StudyMaterialSection() {
     return (
       // Responsive Padding: Mobile pe p-4, Tablet/Laptop pe p-20
       <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 md:p-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          // Responsive Width & Corners: Mobile pe w-full, Laptop pe max-w-md
-          className="max-w-md w-full bg-white rounded-3xl md:rounded-[2.5rem] shadow-2xl p-6 md:p-10 border border-slate-100 my-8"
-        >
+        <div className="max-w-md w-full bg-white rounded-3xl md:rounded-[2.5rem] shadow-2xl p-6 md:p-10 border border-slate-100 my-8">
           <div className="text-center mb-6 md:mb-8">
             <div className="inline-flex p-4 bg-green-50 text-green-600 rounded-3xl mb-4 border border-green-100">
               <Lock size={32} />
@@ -193,7 +188,7 @@ export default function StudyMaterialSection() {
             <p className="text-xs md:text-sm text-slate-500 font-bold mt-2">Enter details to request study access</p>
           </div>
 
-          <form onSubmit={handleRequestAccess} className="space-y-4 md:space-y-5">
+          <form translate="no" onSubmit={handleRequestAccess} className="space-y-4 md:space-y-5">
             {/* Full Name Field */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-black text-slate-400 uppercase ml-2">Full Name</label>
@@ -248,13 +243,14 @@ export default function StudyMaterialSection() {
               {isSubmitting ? (
                 <Loader2 className="animate-spin" />
               ) : (
-                <>
-                  <Send size={18} className="mr-2" /> REQUEST ACCESS
-                </>
+                <span className="flex items-center justify-center">
+                  <Send size={18} className="mr-2" />
+                  <span>REQUEST ACCESS</span>
+                </span>
               )}
             </Button>
           </form>
-        </motion.div>
+        </div>
       </div>
     );
   }
@@ -299,50 +295,46 @@ export default function StudyMaterialSection() {
             )}
 
             <div className="space-y-4">
-              <AnimatePresence mode="wait">
-                {visiblePdfs.map((m: any) => (
-                  <motion.div key={m.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} whileHover={{ y: -2 }} className="group relative bg-white border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm hover:shadow-md transition-all duration-300">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
-                    <div className="flex items-center gap-4 w-full relative z-10">
-                      <div className="h-12 w-12 shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-inner">
-                        <FileText size={24} />
+              {visiblePdfs.map((m: any) => (
+                <motion.div key={m.id} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95 }} whileHover={{ y: -2 }} className="group relative bg-white border border-slate-100 rounded-2xl p-4 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-sm hover:shadow-md transition-all duration-300">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl pointer-events-none" />
+                  <div className="flex items-center gap-4 w-full relative z-10">
+                    <div className="h-12 w-12 shrink-0 rounded-xl bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-inner">
+                      <FileText size={24} />
+                    </div>
+                    <div className="min-w-0 flex-1 text-left">
+                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                        <p className="font-extrabold text-slate-800 truncate text-sm md:text-base">
+                          {m.title}
+                        </p>
+
+                        <span className="hidden md:inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">
+                          PDF
+                        </span>
+
+                        {isNewMaterial(m.created_at) && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500 text-white uppercase animate-pulse">
+                            NEW
+                          </span>
+                        )}
                       </div>
-                      <div className="min-w-0 flex-1 text-left">
-
-                        <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                          <p className="font-extrabold text-slate-800 truncate text-sm md:text-base">
-                            {m.title}
-                          </p>
-
-                          <span className="hidden md:inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">
-                            PDF
-                          </span>
-
-                          {isNewMaterial(m.created_at) && (
-                            <span className="px-2 py-0.5 rounded-full text-[10px] font-black bg-red-500 text-white uppercase animate-pulse">
-                              NEW
-                            </span>
-                          )}
-                        </div>
-                        
-                        <div className="flex items-center gap-3">
-                          <span className="text-xs font-semibold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-md">{m.subject}</span>
-                          <span className="text-[14px] font-medium text-gray-500 flex items-center gap-1">
-                            <span className="h-1 w-1 rounded-full bg-slate-300" /> Class {m.student_class}
-                          </span>
-                        </div>
+                      <div className="flex items-center gap-3">
+                        <span className="text-xs font-semibold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-md">{m.subject}</span>
+                        <span className="text-[14px] font-medium text-gray-500 flex items-center gap-1">
+                          <span className="h-1 w-1 rounded-full bg-slate-300" /> Class {m.student_class}
+                        </span>
                       </div>
                     </div>
-                    <div className="w-full sm:w-auto relative z-10">
-                      <Button asChild className="w-full sm:w-auto rounded-xl font-bold bg-slate-900 hover:bg-blue-600 text-white h-11 px-6">
-                        <a href={m.file_url} target="_blank" rel="noreferrer" className="flex items-center justify-center">
-                          <Download className="h-4 w-4 mr-2 stroke-[3px]" /> Download Notes
-                        </a>
-                      </Button>
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                  </div>
+                  <div className="w-full sm:w-auto relative z-10">
+                    <Button asChild className="w-full sm:w-auto rounded-xl font-bold bg-slate-900 hover:bg-blue-600 text-white h-11 px-6">
+                      <a href={m.file_url} target="_blank" rel="noreferrer" className="flex items-center justify-center">
+                        <Download className="h-4 w-4 mr-2 stroke-[3px]" /> Download Notes
+                      </a>
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
             {filtered.length > 6 && (
