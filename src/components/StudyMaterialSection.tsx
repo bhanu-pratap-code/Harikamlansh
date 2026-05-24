@@ -92,7 +92,7 @@ export default function StudyMaterialSection() {
       const { data: matData, error: matError } = await supabase
         .from("Coaching_StudyMaterial")
         .select("*")
-        .order("created_at", { ascending: true });
+       .order("display_order", { ascending: true });
 
       if (matData) {
         setMaterials(matData);
@@ -275,7 +275,7 @@ export default function StudyMaterialSection() {
               <div className="flex flex-wrap justify-center gap-2">
                 {classes.map((c: string) => (
                   <button key={c} onClick={() => handleClassChange(c)} className={`px-5 py-2 rounded-xl font-bold transition-all ${selectedClass === c ? "bg-primary text-white shadow-md" : "bg-white border text-slate-500 hover:bg-slate-50"}`}>
-                    Class {c}
+                    {c}
                   </button>
                 ))}
               </div>
@@ -321,7 +321,7 @@ export default function StudyMaterialSection() {
                       <div className="flex items-center gap-3">
                         <span className="text-xs font-semibold text-blue-500 bg-blue-50 px-2 py-0.5 rounded-md">{m.subject}</span>
                         <span className="text-[14px] font-medium text-gray-500 flex items-center gap-1">
-                          <span className="h-1 w-1 rounded-full bg-slate-300" /> Class {m.student_class}
+                          <span className="h-1 w-1 rounded-full bg-slate-300" /> {m.student_class}
                         </span>
                       </div>
                     </div>

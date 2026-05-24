@@ -1,11 +1,18 @@
 import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Trash2, Plus, FileText, Upload, Edit2, X, Save, FileUp, Loader2 } from "lucide-react";
+import { Trash2, Plus, FileText, Upload, Edit2, X, Save, FileUp, Loader2, ArrowUp, ArrowDown} from "lucide-react";
 import { supabase } from "@/supabaseClient"; 
 import { toast } from "sonner";
 
 export default function StudyMaterialManager() {
+
+const [renameOldClass, setRenameOldClass] = useState("");
+const [renameNewClass, setRenameNewClass] = useState("");
+const [isRenaming, setIsRenaming] = useState(false);
+
+
+
   const [materials, setMaterials] = useState<any[]>([]); 
   const [form, setForm] = useState({ title: "", student_class: "", subject: "", file_url: "" });
 
@@ -24,7 +31,7 @@ export default function StudyMaterialManager() {
     const { data } = await supabase
       .from("Coaching_StudyMaterial")
       .select("*")
-      .order("created_at", { ascending: false });
+      .order("display_order", { ascending: true });
     if (data) setMaterials(data);
   };
 
@@ -92,12 +99,23 @@ const filteredList = materials.filter((m) => {
 
     setIsUploading(true);
     try {
-        const payload = {
-            title: form.title,
-            student_class: form.student_class,
-            subject: form.subject,
-            file_url: form.file_url
-        };
+       let payload: any = {
+  title: form.title,
+  student_class: form.student_class,
+  subject: form.subject,
+  file_url: form.file_url
+};
+
+if (!editingId) {
+  const { data: lastItem } = await supabase
+    .from("Coaching_StudyMaterial")
+    .select("display_order")
+    .order("display_order", { ascending: false })
+    .limit(1)
+    .single();
+
+  payload.display_order = (lastItem?.display_order || 0) + 1;
+}
 
         if (editingId) {
           const { error } = await supabase
@@ -181,6 +199,95 @@ const filteredList = materials.filter((m) => {
     }
   };
 
+
+          const moveUp = async (item: any) => {
+  const currentOrder = item.display_order;
+
+  const upperItem = materials
+    .filter((m) => m.display_order < currentOrder)
+    .sort((a, b) => b.display_order - a.display_order)[0];
+
+  if (!upperItem) return;
+
+  await supabase
+    .from("Coaching_StudyMaterial")
+    .update({ display_order: upperItem.display_order })
+    .eq("id", item.id);
+
+  await supabase
+    .from("Coaching_StudyMaterial")
+    .update({ display_order: currentOrder })
+    .eq("id", upperItem.id);
+
+  fetchMaterials();
+};
+
+const moveDown = async (item: any) => {
+  const currentOrder = item.display_order;
+
+  const lowerItem = materials
+    .filter((m) => m.display_order > currentOrder)
+    .sort((a, b) => a.display_order - b.display_order)[0];
+
+  if (!lowerItem) return;
+
+  await supabase
+    .from("Coaching_StudyMaterial")
+    .update({ display_order: lowerItem.display_order })
+    .eq("id", item.id);
+
+  await supabase
+    .from("Coaching_StudyMaterial")
+    .update({ display_order: currentOrder })
+    .eq("id", lowerItem.id);
+
+  fetchMaterials();
+};
+
+
+const renameClassEverywhere = async () => {
+
+  if (!renameOldClass || !renameNewClass) {
+    toast.error("Please fill both class names");
+    return;
+  }
+
+  if (renameOldClass === renameNewClass) {
+    toast.error("Both class names are same");
+    return;
+  }
+
+  try {
+
+    setIsRenaming(true);
+
+    const { error } = await supabase
+      .from("Coaching_StudyMaterial")
+      .update({
+        student_class: renameNewClass
+      })
+      .eq("student_class", renameOldClass);
+
+    if (error) throw error;
+
+    toast.success("Class renamed successfully");
+
+    setRenameOldClass("");
+    setRenameNewClass("");
+
+    fetchMaterials();
+
+  } catch (error: any) {
+
+    toast.error(error.message);
+
+  } finally {
+
+    setIsRenaming(false);
+
+  }
+};
+
   return (
     <div className="w-full max-w-6xl mx-auto p-4 md:p-0 animate-in fade-in duration-500">
       <div className="mb-6 md:mb-8">
@@ -215,7 +322,7 @@ const filteredList = materials.filter((m) => {
                 }}
               >
                 <option value="">Select Class</option>
-                {availableClasses.map(c => <option key={c} value={c}>Class {c}</option>)}
+                {availableClasses.map(c => <option key={c} value={c}> {c}</option>)}
                 <option value="new" className="text-primary font-bold">+ Add New Class</option>
               </select>
             ) : (
@@ -279,6 +386,55 @@ const filteredList = materials.filter((m) => {
       </div>
 
 
+<div className="bg-white p-4 md:p-6 rounded-2xl shadow-sm border border-slate-200 mb-6">
+
+  <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4">
+    Rename Existing Class
+  </h3>
+
+  <div className="flex flex-col md:flex-row gap-3">
+
+    {/* Old Class */}
+    <select
+      className="w-full h-10 px-3 rounded-xl border border-input bg-background text-sm"
+      value={renameOldClass}
+      onChange={(e) => setRenameOldClass(e.target.value)}
+    >
+      <option value="">Select Old Class</option>
+
+      {availableClasses.map((c) => (
+        <option key={c} value={c}>
+          {c}
+        </option>
+      ))}
+    </select>
+
+    {/* New Name */}
+    <Input
+      placeholder="New Class Name"
+      value={renameNewClass}
+      onChange={(e) => setRenameNewClass(e.target.value)}
+      className="rounded-xl"
+    />
+
+    {/* Button */}
+    <Button
+      onClick={renameClassEverywhere}
+      disabled={isRenaming}
+      className="rounded-xl"
+    >
+      {isRenaming ? (
+        <Loader2 className="h-4 w-4 animate-spin" />
+      ) : (
+        "Rename"
+      )}
+    </Button>
+
+  </div>
+
+</div>
+
+
      <div className="space-y-4 pb-10">
 
   <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -328,7 +484,7 @@ const filteredList = materials.filter((m) => {
                   : "text-slate-500"
               }`}
             >
-              Class {c}
+              {c}
             </button>
           ))}
         </div>
@@ -382,26 +538,73 @@ const filteredList = materials.filter((m) => {
               <div className="min-w-0">
                 <p className="font-bold text-slate-800 text-sm md:text-base truncate">{m.title}</p>
                 <div className="flex items-center gap-2 text-[11px] md:text-xs font-medium text-slate-400 mt-0.5">
-                  <span className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-bold whitespace-nowrap">Class {m.student_class}</span>
+                  <span className="bg-slate-100 px-1.5 py-0.5 rounded text-slate-600 font-bold whitespace-nowrap">{m.student_class}</span>
                   <span className="hidden xs:inline">•</span>
                   <span className="truncate">{m.subject}</span>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0">
-              <div className="flex gap-1">
-                <Button size="icon" variant="ghost" className="rounded-lg h-9 w-9 text-slate-400 hover:bg-primary/10 hover:text-primary" onClick={() => startEdit(m)}>
-                  <Edit2 className="h-4 w-4" />
-                </Button>
-                <Button size="icon" variant="ghost" className="rounded-lg h-9 w-9 text-slate-400 hover:bg-destructive/10 hover:text-destructive" onClick={() => remove(m.id)}>
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </div>
-              <Button variant="outline" size="sm" className="rounded-lg text-[11px] font-bold h-9 px-4" asChild>
-                <a href={m.file_url} target="_blank" rel="noreferrer">View File</a>
-              </Button>
-            </div>
+    <div className="flex items-center justify-between md:justify-end gap-2 w-full md:w-auto border-t md:border-t-0 pt-3 md:pt-0">
+
+  {/* Action Buttons */}
+  <div className="flex flex-wrap items-center gap-1">
+
+    {/* Move Up */}
+    <Button
+      size="icon"
+      variant="ghost"
+      className="rounded-lg h-9 w-9 text-slate-400 hover:bg-blue-100 hover:text-blue-600"
+     onClick={() => moveUp(m)}
+    >
+      <ArrowUp className="h-4 w-4" />
+    </Button>
+
+    {/* Move Down */}
+    <Button
+      size="icon"
+      variant="ghost"
+      className="rounded-lg h-9 w-9 text-slate-400 hover:bg-blue-100 hover:text-blue-600"
+      onClick={() => moveDown(m)}
+    >
+      <ArrowDown className="h-4 w-4" />
+    </Button>
+
+    {/* Edit */}
+    <Button
+      size="icon"
+      variant="ghost"
+      className="rounded-lg h-9 w-9 text-slate-400 hover:bg-primary/10 hover:text-primary"
+      onClick={() => startEdit(m)}
+    >
+      <Edit2 className="h-4 w-4" />
+    </Button>
+
+    {/* Delete */}
+    <Button
+      size="icon"
+      variant="ghost"
+      className="rounded-lg h-9 w-9 text-slate-400 hover:bg-destructive/10 hover:text-destructive"
+      onClick={() => remove(m.id)}
+    >
+      <Trash2 className="h-4 w-4" />
+    </Button>
+
+  </div>
+
+  {/* View File */}
+  <Button
+    variant="outline"
+    size="sm"
+    className="rounded-lg text-[11px] font-bold h-9 px-4"
+    asChild
+  >
+    <a href={m.file_url} target="_blank" rel="noreferrer">
+      View File
+    </a>
+  </Button>
+
+</div>
           </div>
         ))}
 
