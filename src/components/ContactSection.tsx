@@ -3,14 +3,14 @@ import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { MapPin, Phone, Mail, Loader2, CheckCircle2 } from "lucide-react"; 
-import { supabase } from "@/supabaseClient"; 
+import { MapPin, Phone, Mail, Loader2, CheckCircle2 } from "lucide-react";
+import { supabase } from "@/supabaseClient";
 import { useToast } from "@/hooks/use-toast";
 import React from "react";
 
 export default function ContactSection() {
   const { toast } = useToast();
-  const [isSubmitting, setIsSubmitting] = useState(false); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", message: "" });
 
   const handleSubmit = async (e: FormEvent) => {
@@ -20,6 +20,32 @@ export default function ContactSection() {
       toast({ title: "Please fill required fields", variant: "destructive" });
       return;
     }
+
+    const { data: existingUser } = await supabase
+      .from("Coaching_Contactform")
+      .select("id")
+      .eq("phone", form.phone)
+      .maybeSingle();
+
+    const isHindi = document.cookie.includes("/hi");
+
+    if (existingUser) {
+      toast({
+        title: isHindi
+          ? "फॉर्म पहले से जमा है"
+          : "Already Submitted",
+
+        description: isHindi
+          ? "हम जल्द ही आपसे संपर्क करेंगे।"
+          : "We will get back to you soon.",
+
+        variant: "destructive",
+      });
+
+      setIsSubmitting(false);
+      return;
+    }
+
 
     try {
       setIsSubmitting(true);
@@ -36,10 +62,18 @@ export default function ContactSection() {
         ]);
 
       if (error) throw error;
-      
+
+      const isHindi = document.cookie.includes("/hi");
+
       toast({
-        title: "Inquiry Sent!",
-        description: "We'll get back to you soon.",
+        title: isHindi
+          ? "प्रवेश फॉर्म जमा हो गया है"
+          : "Inquiry Sent!",
+
+        description: isHindi
+          ? "आपकी जानकारी सफलतापूर्वक भेज दी गई है।"
+          : "We'll get back to you soon.",
+
         className: "bg-blue-600 text-white border-none max-w-[300px] p-4 shadow-2xl",
       });
 
@@ -59,10 +93,10 @@ export default function ContactSection() {
     }
   };
 
-  const [category, setCategory] = React.useState(""); 
+  const [category, setCategory] = React.useState("");
   const [selectedClass, setSelectedClass] = React.useState("");
   const [displaySubject, setDisplaySubject] = useState("");
-  
+
   return (
     <section id="contact" className="py-24 bg-slate-50/50">
       <div className="container mx-auto px-4">
@@ -79,7 +113,7 @@ export default function ContactSection() {
             Apply for <span className="text-green-600">Admission</span>
           </h2>
           <p className="mt-4 text-slate-600 max-w-2xl mx-auto text-md">
-           "Fill the digital enrollment form below to secure your seat for the 2026-27 session. Our team will contact you."
+            "Fill the digital enrollment form below to secure your seat for the 2026-27 session. Our team will contact you."
           </p>
         </motion.div>
 
@@ -91,7 +125,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="bg-white p-8 rounded-3xl shadow-xl shadow-blue-500/5 border border-slate-100"
           >
-            <form onSubmit={handleSubmit} className="space-y-5">
+            <form translate="no" onSubmit={handleSubmit} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Input
                   placeholder="Your Name *"
@@ -110,13 +144,13 @@ export default function ContactSection() {
               </div>
 
               <div className="space-y-4">
-                <select 
+                <select
                   value={category}
                   onChange={(e) => {
                     setCategory(e.target.value);
                     setSelectedClass("");
-                    setDisplaySubject(""); 
-                    setForm({ ...form, email: "" }); 
+                    setDisplaySubject("");
+                    setForm({ ...form, email: "" });
                   }}
                   className="w-full p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer"
                 >
@@ -127,27 +161,27 @@ export default function ContactSection() {
 
                 {category === "school" && (
                   <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="grid grid-cols-2 gap-4">
-                    <select 
+                    <select
                       value={selectedClass}
                       onChange={(e) => {
-                          setSelectedClass(e.target.value);
-                          setDisplaySubject(""); 
+                        setSelectedClass(e.target.value);
+                        setDisplaySubject("");
                       }}
                       className="p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none"
                     >
                       <option value="">Select Class</option>
-                      {[5,6,7,8].map(num => (
+                      {[5, 6, 7, 8].map(num => (
                         <option key={num} value={num}>{num}th Standard</option>
                       ))}
                     </select>
 
-                    <select 
+                    <select
                       disabled={!selectedClass}
-                      value={displaySubject} 
+                      value={displaySubject}
                       onChange={(e) => {
                         const sub = e.target.value;
-                        setDisplaySubject(sub); 
-                        setForm({ ...form, email: `Class ${selectedClass}: ${sub}` }); 
+                        setDisplaySubject(sub);
+                        setForm({ ...form, email: `Class ${selectedClass}: ${sub}` });
                       }}
                       className="p-3 h-12 rounded-md border border-slate-200 bg-slate-50 text-sm outline-none disabled:opacity-50"
                     >
@@ -167,9 +201,9 @@ export default function ContactSection() {
                 )}
 
                 {category === "competitive" && (
-                  <motion.select 
+                  <motion.select
                     initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-                    value={displaySubject} 
+                    value={displaySubject}
                     onChange={(e) => {
                       const exam = e.target.value;
                       setDisplaySubject(exam);
@@ -179,9 +213,9 @@ export default function ContactSection() {
                   >
                     <option value="">Select Target Exam</option>
                     <option value="Navodaya entrance exam">Navodaya Entrance Exam</option>
-                       <option value="Sainik school entrance">Sainik School Entrance Exam</option>
-                       <option value="Shramodaya school entrance exam">Shramodaya School Entrance Exam</option>
-                       <option value="Rastriya military school entrance xam">Rastriya Military School Entrance Exam</option>
+                    <option value="Sainik school entrance">Sainik School Entrance Exam</option>
+                    <option value="Shramodaya school entrance exam">Shramodaya School Entrance Exam</option>
+                    <option value="Rastriya military school entrance xam">Rastriya Military School Entrance Exam</option>
                   </motion.select>
                 )}
               </div>
@@ -265,4 +299,3 @@ export default function ContactSection() {
 }
 
 
- 

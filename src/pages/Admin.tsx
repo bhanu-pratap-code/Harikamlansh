@@ -15,7 +15,7 @@ import {
   LogOut
 } from "lucide-react";
 
-import { supabase } from"@/supabaseClient";
+import { supabase } from "@/supabaseClient";
 import BatchManager from "@/components/admin/BatchManager";
 import GalleryManager from "@/components/admin/GalleryManager";
 import StudyMaterialManager from "@/components/admin/StudyMaterialManager";
@@ -28,13 +28,13 @@ import StudentManager from "@/components/admin/StudentManager";
 import { motion, AnimatePresence } from "framer-motion";
 
 const tabs = [
-  { id: "batches", label: "Manage Batches", icon: BookOpen },
-  { id: "gallery", label: "Gallery Photos", icon: Image },
-  { id: "material", label: "Study Material", icon: FileText },
-  { id: "toppers", label: "Toppers & Results", icon: Trophy },
-  { id: "inbox", label: "Student Inquiries", icon: Inbox },
-  { id: "faculty", label: "Faculty Management", icon: User },
   { id: "Hero", label: "Hero Management", icon: AppWindow },
+  { id: "batches", label: "Manage Batches", icon: BookOpen },
+  { id: "faculty", label: "Faculty Management", icon: User },
+  { id: "toppers", label: "Toppers & Results", icon: Trophy },
+  { id: "gallery", label: "Gallery Photos", icon: Image },
+  { id: "inbox", label: "Student Inquiries", icon: Inbox },
+  { id: "material", label: "Study Material", icon: FileText },
   { id: "videos", label: "Videos Management", icon: AppWindow },
   { id: "students", label: "Students Management", icon: AppWindow },
 ] as const;
@@ -54,7 +54,7 @@ const panels: Record<Tab, React.FC> = {
 };
 
 export default function Admin() {
-  const [active, setActive] = useState<Tab>("batches");
+  const [active, setActive] = useState<Tab>("Hero");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -135,11 +135,10 @@ export default function Admin() {
               <button
                 key={t.id}
                 onClick={() => handleTabChange(t.id)}
-                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition ${
-                  IsActive
+                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-semibold transition ${IsActive
                     ? "bg-primary text-white"
                     : "text-slate-500 hover:bg-slate-100"
-                }`}
+                  }`}
               >
                 <t.icon className="h-5 w-5" />
                 {t.label}
@@ -162,7 +161,7 @@ export default function Admin() {
       {/* MAIN CONTENT */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         <header className="bg-white border-b h-16 flex items-center justify-between px-6">
-          <button 
+          <button
             onClick={() => setIsSidebarOpen(true)}
             className="lg:hidden"
           >
