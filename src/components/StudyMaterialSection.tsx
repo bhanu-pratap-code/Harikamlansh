@@ -339,7 +339,7 @@ export default function StudyMaterialSection() {
 
             {filtered.length > 6 && (
               <div className="mt-8 text-center">
-                <Button onClick={() => setShowMorePdfs(!showMorePdfs)} variant="outline" className="rounded-full px-8 font-bold border-2 border-green-300 hover:border-green-500 hover:text-green-600 transition-all flex items-center mx-auto gap-2">
+                <Button onClick={() => setShowMorePdfs(!showMorePdfs)} variant="outline" translate="no" className="rounded-full px-8 font-bold border-2 border-green-300 hover:border-green-500 hover:text-green-600 transition-all flex items-center mx-auto gap-2">
                   {showMorePdfs ? <><ChevronUp className="h-4 w-4" /> Show Less</> : <><ChevronDown className="h-4 w-4" /> Show More Notes ({filtered.length - 6}+)</>}
                 </Button>
               </div>
